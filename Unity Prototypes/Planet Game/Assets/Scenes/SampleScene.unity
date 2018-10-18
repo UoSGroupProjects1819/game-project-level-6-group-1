@@ -670,7 +670,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44a4d2b28e725bb47a836b81f1ddc8e7, type: 3}
   m_Name: 
@@ -744,6 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 1581365324525198, guid: fb55e28fe239da04f8e5641c18a44ee2,
     type: 2}
+  WorldTransform: {fileID: 1698292014}
 --- !u!1 &595576079
 GameObject:
   m_ObjectHideFlags: 0

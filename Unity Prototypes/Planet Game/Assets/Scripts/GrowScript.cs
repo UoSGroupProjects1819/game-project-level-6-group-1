@@ -8,6 +8,7 @@ public class GrowScript : MonoBehaviour {
     private Vector3 desiredSize;
     [SerializeField]
     private float growthTime;
+    private float targetTime;
     [SerializeField]
     private Sprite smallSprite;
     [SerializeField]
@@ -25,12 +26,14 @@ public class GrowScript : MonoBehaviour {
 
         float currentTime = 0.0f;
 
+        targetTime = Time.time + growthTime;
+
         do
         {
-            gameObject.transform.localScale = Vector3.Lerp(originalScale, desiredSize, currentTime / growthTime);
-            currentTime += Time.deltaTime;
+            gameObject.transform.localScale = Vector3.Lerp(originalScale, desiredSize, currentTime / targetTime);
+            currentTime = Time.time;
             yield return null;
-        } while (currentTime <= growthTime);
+        } while (currentTime <= targetTime);
 
         sprRenderer.sprite = bigSprite;
         StopAllCoroutines();
