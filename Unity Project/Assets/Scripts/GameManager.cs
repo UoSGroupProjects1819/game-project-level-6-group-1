@@ -11,12 +11,22 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        if (PlayerPrefs.HasKey("playerPlanetName"))
+        {
+            planetName = PlayerPrefs.GetString("playerPlanetName");
+            Debug.Log("Planet Loaded!");
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            PlayerPrefs.SetString("playerPlanetName", planetName);
+            PlayerPrefs.Save();
+
+            Debug.Log("Planet saved!");
+        }
 	}
 
     public void OnSubmit()
