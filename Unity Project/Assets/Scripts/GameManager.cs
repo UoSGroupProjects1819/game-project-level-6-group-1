@@ -1,38 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    [SerializeField] private InputField nameField;
+    public static GameManager GMInstance = null;
 
-    private string planetName;
+    //[SerializeField] private InputField nameField;
 
-	// Use this for initialization
-	void Start () {
-        if (PlayerPrefs.HasKey("playerPlanetName"))
-        {
-            planetName = PlayerPrefs.GetString("playerPlanetName");
-            Debug.Log("Planet Loaded!");
-        }
+    //private string planetName;
+
+    private void Awake()
+    {
+        if (GMInstance == null)
+            GMInstance = this;
+        else if (GMInstance != null)
+            Destroy(gameObject);
+    }
+
+    private void Start ()
+    {
+        //if (PlayerPrefs.HasKey("playerPlanetName"))
+        //{
+        //    planetName = PlayerPrefs.GetString("playerPlanetName");
+        //    Debug.Log("Planet Loaded!");
+        //}
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            PlayerPrefs.SetString("playerPlanetName", planetName);
-            PlayerPrefs.Save();
+	private void Update ()
+    {
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    PlayerPrefs.SetString("playerPlanetName", planetName);
+        //    PlayerPrefs.Save();
 
-            Debug.Log("Planet saved!");
-        }
+        //    Debug.Log("Planet saved!");
+        //}
 	}
 
     public void OnSubmit()
     {
-        planetName = nameField.text;
+        //planetName = nameField.text;
 
-        Debug.Log("Planet Name : " + planetName);
+        //Debug.Log("Planet Name : " + planetName);
+    }
+
+    public void StartGame()
+    {
+        // Start the game.
     }
 }
