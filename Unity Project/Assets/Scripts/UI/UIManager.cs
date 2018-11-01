@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject MAINMENU_UI;
     [SerializeField] private Animator planetNameAnim;
 
+    public TMPro.TMP_InputField planetNameInput;
+
     private CameraMovement camMovement;
 
     private void Awake()
@@ -24,19 +26,30 @@ public class UIManager : MonoBehaviour {
         camMovement = Camera.main.GetComponent<CameraMovement>();
     }
 
-    public void GOTOMAINMENU()
+    public void _MainMenuButton()
     {
         camMovement.moveTowards = new Vector3(0, 0, -10);
     }
 
-    public void GOTOSETTINGS()
+    public void _SettingsButton()
     {
         camMovement.moveTowards = new Vector3(18, 0, -10);
     }
 
-    public void PLAYGAME()
+    public void _PlanetCreationButton()
+    {
+        PlanetCreation();
+        GameManager.GMInstance.GoToPlanetCreation();
+    }
+
+    private void PlanetCreation()
     {
         MAINMENU_UI.SetActive(false);
         planetNameAnim.Play("PlanetNameDropDown");
+    }
+
+    public void GameLoop()
+    {
+        planetNameAnim.Play("PlanetNameUp");
     }
 }

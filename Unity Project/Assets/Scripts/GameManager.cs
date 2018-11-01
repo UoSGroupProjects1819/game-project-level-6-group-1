@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour {
     // This is how much time has passed between each play sessions, this can be used to compare
     // if objects have finished growing. The times are saved to the PlayerPrefs.
     [HideInInspector] public double secondsPassed;
+    [HideInInspector] public string planetName;
+
+    // Enum that is used to control the current state of the game.
+    private enum GameState { MainMenu, PlanetCreation, Gameloop, Sorting };
+    GameState currentState;
 
     private void Awake()
     {
@@ -19,8 +24,31 @@ public class GameManager : MonoBehaviour {
 
     private void Start ()
     {
+        currentState = GameState.MainMenu;
+
         GetTimeDifference();
 	}
+
+    private void Update()
+    {
+        if (currentState == GameState.PlanetCreation)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                planetName = UIManager.UIInstance.planetNameInput.text;
+
+                if (planetName == "" || planetName == " ")
+                {
+                    Debug.LogError("Planet name cannot be empty!");
+                }
+                else
+                {
+                    Debug.Log("Planet name is: " + planetName);
+                    StartGame();
+                }
+            }
+        }
+    }
 
     private void GetTimeDifference()
     {
@@ -52,5 +80,18 @@ public class GameManager : MonoBehaviour {
     {
         // When quitting the game, save the time to PlayerPrefs.
         PlayerPrefs.SetString("sysTime", System.DateTime.Now.ToBinary().ToString());
+    }
+
+    /* FUNCTIONS USED TO CONTROL THE STATE OF THE GAME */
+
+    public void GoToPlanetCreation()
+    {
+        currentState = GameState.PlanetCreation;
+    }
+
+    private void StartGame()
+    {
+        currentState = GameState.Gameloop;
+        UIManager.UIInstance.GameLoop();
     }
 }

@@ -1272,9 +1272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155a239fcf0ba4049a7980c0f6bdf6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSmoothness: 70
   MAINMENU_UI: {fileID: 2128504070}
   planetNameAnim: {fileID: 973104409}
+  planetNameInput: {fileID: 973104406}
 --- !u!4 &375136160
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,6 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsPassed: 0
+  planetName: 
 --- !u!1 &386488015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1497,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 375136159}
-        m_MethodName: GOTOMAINMENU
+        m_MethodName: _MainMenuButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2045,7 +2046,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 375136159}
-        m_MethodName: PLAYGAME
+        m_MethodName: _PlanetCreationButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3226,6 +3227,7 @@ GameObject:
   - component: {fileID: 1001770092}
   - component: {fileID: 1001770091}
   - component: {fileID: 1001770090}
+  - component: {fileID: 1001770093}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3293,6 +3295,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1001770093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1001770089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195717300a6a92b41b30e266cf401ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraMinSize: 4
+  cameraMaxSize: 14
+  cameraMenuMoveSpeed: 70
+  planetTemp: {fileID: 1512695956}
+  menuMode: 1
+  notPlanet: 1
+  moveTowards: {x: 0, y: 0, z: 0}
 --- !u!1 &1053502818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3370,7 +3390,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 375136159}
-        m_MethodName: GOTOSETTINGS
+        m_MethodName: _SettingsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5445,8 +5465,8 @@ GameObject:
   - component: {fileID: 2145347655}
   - component: {fileID: 2145347654}
   m_Layer: 5
-  m_Name: Canvas
-  m_TagString: Untagged
+  m_Name: MenuCanvas
+  m_TagString: MainMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
