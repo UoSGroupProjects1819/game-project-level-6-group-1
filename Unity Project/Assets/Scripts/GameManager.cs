@@ -5,9 +5,9 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager GMInstance = null;
 
-    private DateTime oldDate;
-    private DateTime currentDate;
-    private double secondsPassed;
+    // This is how much time has passed between each play sessions, this can be used to compare
+    // if objects have finished growing. The times are saved to the PlayerPrefs.
+    [HideInInspector] public double secondsPassed;
 
     private void Awake()
     {
@@ -21,44 +21,20 @@ public class GameManager : MonoBehaviour {
     {
         GetTimeDifference();
 	}
-	
-	private void Update ()
-    {
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    PlayerPrefs.SetString("playerPlanetName", planetName);
-        //    PlayerPrefs.Save();
-
-        //    Debug.Log("Planet saved!");
-        //}
-	}
-
-    public void OnSubmit()
-    {
-        //planetName = nameField.text;
-
-        //Debug.Log("Planet Name : " + planetName);
-    }
-
-    public void StartGame()
-    {
-        // Start the game.
-    }
 
     private void GetTimeDifference()
     {
-        // Getting the current time.
+        DateTime oldDate;           // The old time, that has been saved to the PlayerPrefs.
+        DateTime currentDate;       // Current date that has been loaded when the game was launched.
+
         currentDate = System.DateTime.Now;
 
-        // Get the old time.
         if (PlayerPrefs.HasKey("sysTime"))
         {
             // If the game was run previously, get the time difference.
-            long tempTime = Convert.ToInt64(PlayerPrefs.GetString("sysTime"));
-
             // Convert the old time from binary to DataTime variable
+            long tempTime = Convert.ToInt64(PlayerPrefs.GetString("sysTime"));
             oldDate = DateTime.FromBinary(tempTime);
-            Debug.Log("Old Time: " + oldDate);
         }
         else
         {
@@ -67,16 +43,14 @@ public class GameManager : MonoBehaviour {
             oldDate = System.DateTime.Now;
         }
 
+        // Calculate the difference, and convert it into seconds.
         TimeSpan difference = currentDate.Subtract(oldDate);
-        Debug.Log("Difference: " + difference);
-
         secondsPassed = difference.Seconds;
-        Debug.Log("Seconds passed: " + secondsPassed);
     }
 
     private void OnApplicationQuit()
     {
+        // When quitting the game, save the time to PlayerPrefs.
         PlayerPrefs.SetString("sysTime", System.DateTime.Now.ToBinary().ToString());
-        Debug.Log("Saving time to prefs: " + System.DateTime.Now);
     }
 }

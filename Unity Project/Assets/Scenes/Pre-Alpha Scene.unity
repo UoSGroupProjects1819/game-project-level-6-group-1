@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155a239fcf0ba4049a7980c0f6bdf6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSmoothness: 2
+  movementSmoothness: 70
   MAINMENU_UI: {fileID: 2128504070}
   planetNameAnim: {fileID: 973104409}
 --- !u!4 &375136160
@@ -1299,6 +1299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7334235bcefabf04087ca3b16315516b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secondsPassed: 0
 --- !u!1 &386488015
 GameObject:
   m_ObjectHideFlags: 0
