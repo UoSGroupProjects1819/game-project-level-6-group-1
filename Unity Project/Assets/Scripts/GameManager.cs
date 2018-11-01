@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager GMInstance = null;
 
-    //[SerializeField] private InputField nameField;
-
-    //private string planetName;
+    private DateTime oldDate;
+    private DateTime currentDate;
+    private double secondsPassed;
 
     private void Awake()
     {
@@ -18,11 +19,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start ()
     {
-        //if (PlayerPrefs.HasKey("playerPlanetName"))
-        //{
-        //    planetName = PlayerPrefs.GetString("playerPlanetName");
-        //    Debug.Log("Planet Loaded!");
-        //}
+        GetTimeDifference();
 	}
 	
 	private void Update ()
@@ -46,5 +43,40 @@ public class GameManager : MonoBehaviour {
     public void StartGame()
     {
         // Start the game.
+    }
+
+    private void GetTimeDifference()
+    {
+        // Getting the current time.
+        currentDate = System.DateTime.Now;
+
+        // Get the old time.
+        if (PlayerPrefs.HasKey("sysTime"))
+        {
+            // If the game was run previously, get the time difference.
+            long tempTime = Convert.ToInt64(PlayerPrefs.GetString("sysTime"));
+
+            // Convert the old time from binary to DataTime variable
+            oldDate = DateTime.FromBinary(tempTime);
+            Debug.Log("Old Time: " + oldDate);
+        }
+        else
+        {
+            // Else if the game was not run before, set the previous time to currnent time.
+            // This will avoid null exception.
+            oldDate = System.DateTime.Now;
+        }
+
+        TimeSpan difference = currentDate.Subtract(oldDate);
+        Debug.Log("Difference: " + difference);
+
+        secondsPassed = difference.Seconds;
+        Debug.Log("Seconds passed: " + secondsPassed);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetString("sysTime", System.DateTime.Now.ToBinary().ToString());
+        Debug.Log("Saving time to prefs: " + System.DateTime.Now);
     }
 }
