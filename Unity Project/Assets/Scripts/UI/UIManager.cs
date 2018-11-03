@@ -6,10 +6,7 @@ public class UIManager : MonoBehaviour {
 
     public static UIManager UIInstance = null;
 
-    [SerializeField] private GameObject MAINMENU_UI;
     [SerializeField] private Animator planetNameAnim;
-
-    public TMPro.TMP_InputField planetNameInput;
 
     private CameraMovement camMovement;
 
@@ -26,29 +23,33 @@ public class UIManager : MonoBehaviour {
         camMovement = Camera.main.GetComponent<CameraMovement>();
     }
 
-    public void _MainMenuButton()
+    /* FUNCTIONS FOR THE BUTTONS */
+
+    public void _StartGame()
     {
-        camMovement.moveTowards = new Vector3(0, 0, -10);
+        GameManager.GMInstance.LoadGame();
     }
 
-    public void _SettingsButton()
+    public void _ShowInventory()
     {
-        camMovement.moveTowards = new Vector3(18, 0, -10);
+        // Show the seeds bag.
+        Debug.Log("Show inventory.");
     }
 
-    public void _PlanetCreationButton()
-    {
-        PlanetCreation();
-        GameManager.GMInstance.GoToPlanetCreation();
-    }
+    /* CONTROLLING THE UI */
 
-    private void PlanetCreation()
+    public void ShowCreationMenu()
     {
-        MAINMENU_UI.SetActive(false);
         planetNameAnim.Play("PlanetNameDropDown");
+
+        GameObject[] _MainMenu = GameObject.FindGameObjectsWithTag("MainMenu");
+        foreach (GameObject _go in _MainMenu)
+        {
+            _go.SetActive(false);
+        }
     }
 
-    public void GameLoop()
+    public void GameUI()
     {
         planetNameAnim.Play("PlanetNameUp");
     }

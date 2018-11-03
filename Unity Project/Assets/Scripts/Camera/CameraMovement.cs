@@ -2,6 +2,7 @@
 
 public class CameraMovement : MonoBehaviour {
 
+    [Header("Camera Control Settings")]
     [Tooltip("This is the camera's minimum size, players won't be able to zoom in more than this value.")]
     [SerializeField] private float cameraMinSize    = 4.0f;
 
@@ -9,7 +10,12 @@ public class CameraMovement : MonoBehaviour {
     [SerializeField] private float cameraMaxSize    = 14.0f;
 
     [Tooltip("This is the value used to control the camera movement speed in the menu, increasing this value will make the camera move from one menu to another faster while decreasing it will make it move slower.")]
-    [SerializeField] private float cameraMenuMoveSpeed  = 70.0f;
+    [SerializeField] private float cameraMenuSpeed  = 70.0f;
+
+    [Tooltip("This is how far the players can move the camera (in Unity's units), use this to limit player's camera movement.")]
+    [SerializeField] private float camMaxX, camMaxY;
+
+    [Header("Temporary Debug Stuff")]
     [SerializeField] private GameObject planetTemp;
 
     [HideInInspector] public bool menuMode  = true;
@@ -17,6 +23,8 @@ public class CameraMovement : MonoBehaviour {
     [HideInInspector] public Vector3 moveTowards;
 
     private Vector3 touchStart;
+    private RaycastHit rayHit;
+    private Ray ray;
 
     private void Awake()
     {
@@ -26,17 +34,17 @@ public class CameraMovement : MonoBehaviour {
 
     private void Update()
     {
-        if (menuMode)
+        if (GameManager.GMInstance.inMenu)
         {
             // The camera is in the menu mode, which means players are not able to control the camera directly.
             transform.position = Vector3.MoveTowards(
-                transform.position, moveTowards, cameraMenuMoveSpeed * Time.deltaTime);
+                transform.position, moveTowards, cameraMenuSpeed * Time.deltaTime);
         }
-        else if (!menuMode)
+        else
         {
             // Camera is NOT in menuMode, but in 'playMode'; players can control the camera.
             // Grab the postition of when the users first pressed down (or mouse clicked).
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(0))
             {
                 touchStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
@@ -61,14 +69,24 @@ public class CameraMovement : MonoBehaviour {
 
             // Players are holding the touch (or holding the mouse button), they are trying to move camera.
             // Calculate the difference between the first touch, and current position and move camera accordingly.
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(0) && !GameManager.GMInstance.onPlanet)
             {
                 Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Camera.main.transform.position += direction;
+                //Camera.main.transform.position += direction;
+                transform.Translate(direction);
             }
 
             // Handle the camera zoom, if players are using a mouse.
             HandleZoom(Input.GetAxis("Mouse ScrollWheel"));
+        }
+
+        // Clamp the camera movement, so players can't loose track of the planet.
+        if (!menuMode)
+        {
+            transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, -camMaxX, camMaxX),
+                Mathf.Clamp(transform.position.y, -camMaxY, camMaxY),
+                -10.0f);
         }
     }
 
@@ -77,5 +95,10 @@ public class CameraMovement : MonoBehaviour {
         // Handle the camera zoom, clamp it between min/max values.
         Camera.main.orthographicSize = Mathf.Clamp(
             Camera.main.orthographicSize - increment, cameraMinSize, cameraMaxSize);
+    }
+
+    private void HandleCameraRotation()
+    {
+
     }
 }

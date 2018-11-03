@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager GMInstance = null;
 
-    // This is how much time has passed between each play sessions, this can be used to compare
-    // if objects have finished growing. The times are saved to the PlayerPrefs.
+    [HideInInspector] public bool inMenu = true;
+    [HideInInspector] public bool onPlanet = false;
+
     [HideInInspector] public double secondsPassed;
     [HideInInspector] public string planetName;
+
+    private TimeController timeController;
+    private PlanetCreation planetCreation;
 
     // Enum that is used to control the current state of the game.
     private enum GameState { MainMenu, PlanetCreation, Gameloop, Sorting };
@@ -24,74 +29,61 @@ public class GameManager : MonoBehaviour {
 
     private void Start ()
     {
-        currentState = GameState.MainMenu;
+        // DELETE ALL PLAYERPREF KEYS. || ONLY FOR TESTING.
+        PlayerPrefs.DeleteAll();
 
-        GetTimeDifference();
+        planetCreation = gameObject.GetComponent<PlanetCreation>();
+        timeController = gameObject.GetComponent<TimeController>();
+
+        //StartGame();
 	}
-
-    private void Update()
-    {
-        if (currentState == GameState.PlanetCreation)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                planetName = UIManager.UIInstance.planetNameInput.text;
-
-                if (planetName == "" || planetName == " ")
-                {
-                    Debug.LogError("Planet name cannot be empty!");
-                }
-                else
-                {
-                    Debug.Log("Planet name is: " + planetName);
-                    StartGame();
-                }
-            }
-        }
-    }
-
-    private void GetTimeDifference()
-    {
-        DateTime oldDate;           // The old time, that has been saved to the PlayerPrefs.
-        DateTime currentDate;       // Current date that has been loaded when the game was launched.
-
-        currentDate = System.DateTime.Now;
-
-        if (PlayerPrefs.HasKey("sysTime"))
-        {
-            // If the game was run previously, get the time difference.
-            // Convert the old time from binary to DataTime variable
-            long tempTime = Convert.ToInt64(PlayerPrefs.GetString("sysTime"));
-            oldDate = DateTime.FromBinary(tempTime);
-        }
-        else
-        {
-            // Else if the game was not run before, set the previous time to currnent time.
-            // This will avoid null exception.
-            oldDate = System.DateTime.Now;
-        }
-
-        // Calculate the difference, and convert it into seconds.
-        TimeSpan difference = currentDate.Subtract(oldDate);
-        secondsPassed = difference.Seconds;
-    }
 
     private void OnApplicationQuit()
     {
         // When quitting the game, save the time to PlayerPrefs.
-        PlayerPrefs.SetString("sysTime", System.DateTime.Now.ToBinary().ToString());
+        timeController.SaveTime();
     }
 
     /* FUNCTIONS USED TO CONTROL THE STATE OF THE GAME */
 
-    public void GoToPlanetCreation()
+    public void LoadGame()
     {
-        currentState = GameState.PlanetCreation;
+        Debug.Log("Load game");
+
+        // Before starting the planet creation menu, see if a existing game save exists.
+        if (PlayerPrefs.HasKey("PlanetName"))
+        {
+            // There is a planet name saved in the PlayerPrefs, we assume that a save exists.
+            planetName = PlayerPrefs.GetString("PlanetName");
+            Debug.Log("Game found, loading game!");
+            StartGame();
+        }
+        else
+        {
+            // No planet has been created, show the creation menu.
+            Debug.Log("No previous game found, create new planet.");
+            PlanetCreationMenu();
+        }
+
     }
 
-    private void StartGame()
+    public void StartGame()
     {
-        currentState = GameState.Gameloop;
-        UIManager.UIInstance.GameLoop();
+        Debug.Log("Start game!");
+        UIManager.UIInstance.GameUI();
+        inMenu = false;
+    }
+
+    private void PlanetCreationMenu()
+    {
+        planetCreation.ShowCreationMenu();
+    }
+
+    /* TEMP FUNCTIONS */
+
+    private void SaveGame()
+    {
+        PlayerPrefs.SetString("PlanetName", planetName);
+        timeController.SaveTime();
     }
 }
