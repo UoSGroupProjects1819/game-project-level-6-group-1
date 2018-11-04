@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager GMInstance = null;
 
+    public bool skipMenu= false;
     [HideInInspector] public bool inMenu = true;
     [HideInInspector] public bool onPlanet = false;
 
@@ -35,7 +36,8 @@ public class GameManager : MonoBehaviour {
         planetCreation = gameObject.GetComponent<PlanetCreation>();
         timeController = gameObject.GetComponent<TimeController>();
 
-        //StartGame();
+        if (skipMenu)
+            StartGame();
 	}
 
     private void OnApplicationQuit()

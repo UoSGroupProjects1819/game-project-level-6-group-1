@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMovement : MonoBehaviour {
 
@@ -34,6 +35,9 @@ public class CameraMovement : MonoBehaviour {
 
     private void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (GameManager.GMInstance.inMenu)
         {
             // The camera is in the menu mode, which means players are not able to control the camera directly.
