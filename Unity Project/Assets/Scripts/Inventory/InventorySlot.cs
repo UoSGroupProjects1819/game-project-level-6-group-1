@@ -8,6 +8,9 @@ public class InventorySlot : MonoBehaviour {
 
     Item item;
 
+    /// <summary>
+    /// Add a new item to the inventory list.
+    /// </summary>
     public void AddItem(Item newItem)
     {
         item = newItem;
@@ -17,6 +20,9 @@ public class InventorySlot : MonoBehaviour {
         removeButton.interactable = true;
     }
 
+    /// <summary>
+    /// Remove an item from the inventory list.
+    /// </summary>
     public void ClearSlot()
     {
         item = null;
@@ -26,16 +32,20 @@ public class InventorySlot : MonoBehaviour {
         removeButton.interactable = false;
     }
 
+    #region UI BUTTON FUNCTIONS
+
     public void OnRemoveButton()
     {
         Inventory.instance.Remove(item);
     }
 
-    public void UseItem()
+    public void OnUseButton()
     {
         if (item != null)
         {
             item.UseItem();
         }
     }
+
+    #endregion
 }

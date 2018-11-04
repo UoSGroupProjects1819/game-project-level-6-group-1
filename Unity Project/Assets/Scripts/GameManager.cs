@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager GMInstance = null;
 
+    [Tooltip("Set this to true, in order to skip the menu and go straight into the gameplay.")]
     public bool skipMenu= false;
+
     [HideInInspector] public bool inMenu = true;
     [HideInInspector] public bool onPlanet = false;
 
@@ -15,10 +17,6 @@ public class GameManager : MonoBehaviour {
 
     private TimeController timeController;
     private PlanetCreation planetCreation;
-
-    // Enum that is used to control the current state of the game.
-    private enum GameState { MainMenu, PlanetCreation, Gameloop, Sorting };
-    GameState currentState;
 
     private void Awake()
     {
@@ -46,7 +44,7 @@ public class GameManager : MonoBehaviour {
         timeController.SaveTime();
     }
 
-    /* FUNCTIONS USED TO CONTROL THE STATE OF THE GAME */
+    #region FUNCTIONS USED TO CONTROL THE GAME
 
     public void LoadGame()
     {
@@ -88,4 +86,6 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.SetString("PlanetName", planetName);
         timeController.SaveTime();
     }
+
+    #endregion
 }

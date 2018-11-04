@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour {
     public static UIManager UIInstance = null;
 
     [SerializeField] private Animator planetNameAnim;
+    [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject sidebarUI;
 
     private CameraMovement camMovement;
 
@@ -52,5 +54,11 @@ public class UIManager : MonoBehaviour {
     public void GameUI()
     {
         planetNameAnim.Play("PlanetNameUp");
+    }
+
+    public void ToggleInventoryUI()
+    {
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
+        sidebarUI.SetActive(!inventoryUI.activeSelf);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RotatePlanet : MonoBehaviour {
 
@@ -6,6 +7,10 @@ public class RotatePlanet : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        // If we are hovering over the UI, don't move the camera. Quick, easy and works.
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (!GameManager.GMInstance.inMenu)
         {
             GameManager.GMInstance.onPlanet = true;
@@ -20,6 +25,10 @@ public class RotatePlanet : MonoBehaviour {
 
     private void OnMouseDrag()
     {
+        // If we are hovering over the UI, don't move the camera. Quick, easy and works.
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (!GameManager.GMInstance.inMenu)
         {
             GameManager.GMInstance.onPlanet = true;

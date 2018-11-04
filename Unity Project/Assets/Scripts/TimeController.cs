@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 public class TimeController : MonoBehaviour {
@@ -39,6 +38,9 @@ public class TimeController : MonoBehaviour {
         return secondsPassed;
     }
 
+    /// <summary>
+    /// Save the current time to PlayerPrefs. Use this, rather than manually saving it.
+    /// </summary>
     public void SaveTime()
     {
         PlayerPrefs.SetString(timeKey, DateTime.Now.ToBinary().ToString());

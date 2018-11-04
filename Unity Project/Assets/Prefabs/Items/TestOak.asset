@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: TestOak
   m_EditorClassIdentifier: 
   name: Placeholder Oak
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300020, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}

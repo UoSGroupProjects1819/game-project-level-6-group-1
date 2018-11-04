@@ -12,16 +12,8 @@ public class InventoryUI : MonoBehaviour {
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
 
+        // At the moment our inventory space won't expand, so we only need to do this once.
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
-        }
-
     }
 
     private void UpdateUI()

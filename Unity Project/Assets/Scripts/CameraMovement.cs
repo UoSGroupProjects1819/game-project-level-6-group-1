@@ -35,6 +35,7 @@ public class CameraMovement : MonoBehaviour {
 
     private void Update()
     {
+        // If we are hovering over the UI, don't move the camera. Quick, easy and works.
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -99,10 +100,5 @@ public class CameraMovement : MonoBehaviour {
         // Handle the camera zoom, clamp it between min/max values.
         Camera.main.orthographicSize = Mathf.Clamp(
             Camera.main.orthographicSize - increment, cameraMinSize, cameraMaxSize);
-    }
-
-    private void HandleCameraRotation()
-    {
-
     }
 }
