@@ -86,11 +86,12 @@ public class CameraMovement : MonoBehaviour {
         }
 
         // Clamp the camera movement, so players can't loose track of the planet.
-        if (!menuMode)
+        // Only do it while we are not in the menu.
+        if (!GameManager.GMInstance.inMenu)
         {
             transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, -camMaxX, camMaxX),
-                Mathf.Clamp(transform.position.y, -camMaxY, camMaxY),
+                Mathf.Clamp(transform.position.x, -10, 10),
+                Mathf.Clamp(transform.position.y, -10, 10),
                 -10.0f);
         }
     }

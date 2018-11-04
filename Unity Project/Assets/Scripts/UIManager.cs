@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject sidebarUI;
 
+    [SerializeField] private Canvas gameCanvas;
+    [SerializeField] private Canvas menuCanvas;
+
     private CameraMovement camMovement;
 
     private void Awake()
@@ -38,6 +41,12 @@ public class UIManager : MonoBehaviour {
         Debug.Log("Show inventory.");
     }
 
+    public void ToggleInventoryUI()
+    {
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
+        sidebarUI.SetActive(!inventoryUI.activeSelf);
+    }
+    
     /* CONTROLLING THE UI */
 
     public void ShowCreationMenu()
@@ -53,12 +62,8 @@ public class UIManager : MonoBehaviour {
 
     public void GameUI()
     {
+        sidebarUI.SetActive(true);
         planetNameAnim.Play("PlanetNameUp");
     }
 
-    public void ToggleInventoryUI()
-    {
-        inventoryUI.SetActive(!inventoryUI.activeSelf);
-        sidebarUI.SetActive(!inventoryUI.activeSelf);
-    }
 }
