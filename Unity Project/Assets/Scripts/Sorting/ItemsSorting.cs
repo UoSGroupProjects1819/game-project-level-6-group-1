@@ -27,10 +27,10 @@ public class ItemsSorting : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.instance.enableSorting)
+        //if (GameManager.instance.enableSorting)
             SpawnNewObject();
 
-        StartCoroutine(TestReward());
+        //StartCoroutine(TestReward());
     }
 
     private void Update()
@@ -48,7 +48,6 @@ public class ItemsSorting : MonoBehaviour
 
         Energy.instance.RemoveEnergy(1);
         itemsSortedCorrectly++;
-        UpdateUI();
 
         Destroy(item);
         SpawnNewObject();
@@ -59,7 +58,6 @@ public class ItemsSorting : MonoBehaviour
         Debug.Log("Sorted incorrectly: " + item.name);
 
         Energy.instance.RemoveEnergy(1);
-        UpdateUI();
 
         Destroy(item);
         SpawnNewObject();
@@ -76,11 +74,6 @@ public class ItemsSorting : MonoBehaviour
     private void SpawnNewObject()
     {
         StartCoroutine(SpawnNewItem());
-    }
-
-    private void UpdateUI()
-    {
-        debugSortedCounter.text = itemsSortedCorrectly.ToString();
     }
 
     IEnumerator SpawnNewItem()
