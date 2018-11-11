@@ -44,8 +44,6 @@ public class ItemsSorting : MonoBehaviour
 
     public void SortedCorrectly(GameObject item)
     {
-        Debug.Log("Sorted correctly: " + item.name);
-
         Energy.instance.RemoveEnergy(1);
         itemsSortedCorrectly++;
 
@@ -55,8 +53,6 @@ public class ItemsSorting : MonoBehaviour
 
     public void SortedIncorrectly(GameObject item)
     {
-        Debug.Log("Sorted incorrectly: " + item.name);
-
         Energy.instance.RemoveEnergy(1);
 
         Destroy(item);

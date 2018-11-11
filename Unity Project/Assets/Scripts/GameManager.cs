@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
                 // Cleanup
                 currentState = GameState.Gameplay;
 
+                Inventory.instance.Remove(itemHolding);
+
                 tempObject = null;
                 itemHolding = null;
                 itemToPlace = null;

@@ -57,7 +57,7 @@ public class Energy : MonoBehaviour
 
     private void Update()
     {
-        if (currentEnergy == maxEnergy)
+        if (currentEnergy == maxEnergy && desiredEnergy == currentEnergy)
             return;
 
         if (currentEnergy != desiredEnergy)
