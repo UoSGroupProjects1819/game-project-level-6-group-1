@@ -9,32 +9,44 @@ public class ObjectManager : MonoBehaviour {
     [SerializeField] private Sprite growingSprite;
     [SerializeField] private float growthTime;
     [SerializeField] private float targetTime;
-    [SerializeField] Vector3 desiredSize;
+    [SerializeField] private Vector3 desiredSize;
+    [SerializeField] private GameObject collectStar;
 
+    private bool finishedGrowing;
     private GameObject playerPlanet;
 
 	void Start ()
     {
+        collectStar.SetActive(false);
         StartCoroutine(ManageGrowth(growthTime));
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
 	}
 
-    private void OnMouseDrag()
+    private void OnMouseDown()
     {
-        /* Moving the object, after it has been placed. */
-        // Get the mouse position, and convert it to world point.
-        Vector3 movePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        movePos.z = 0;
-
-        // Calculate rotation, so that object faces center of the planet.
-        Vector3 difference = playerPlanet.transform.position - transform.position;
-        float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-
-        // Apply the rotation and position.
-        transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle + 90.0f));
-        transform.position = movePos;
+        if (finishedGrowing)
+        {
+            collectStar.SetActive(false);
+            Energy.instance.AddEnergy(1);
+        }
     }
+
+    //private void OnMouseDrag()
+    //{
+    //    /* Moving the object, after it has been placed. */
+    //    // Get the mouse position, and convert it to world point.
+    //    Vector3 movePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    movePos.z = 0;
+
+    //    // Calculate rotation, so that object faces center of the planet.
+    //    Vector3 difference = playerPlanet.transform.position - transform.position;
+    //    float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+
+    //    // Apply the rotation and position.
+    //    transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle + 90.0f));
+    //    transform.position = movePos;
+    //}
 
     IEnumerator ManageGrowth (float time)
     {
@@ -51,6 +63,8 @@ public class ObjectManager : MonoBehaviour {
         } while (currentTime <= targetTime);
 
         sprRenderer.sprite = finishedSprite;
+        collectStar.SetActive(true);
+        finishedGrowing = true;
         StopCoroutine(ManageGrowth(0));
     }
 }

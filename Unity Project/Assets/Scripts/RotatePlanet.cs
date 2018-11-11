@@ -11,9 +11,9 @@ public class RotatePlanet : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!GameManager.GMInstance.inMenu)
+        if (!GameManager.instance.inMenu)
         {
-            GameManager.GMInstance.onPlanet = true;
+            GameManager.instance.onPlanet = true;
 
             Vector3 mousePos = Camera.main.WorldToScreenPoint(transform.position);
             mousePos = Input.mousePosition - mousePos;
@@ -29,9 +29,9 @@ public class RotatePlanet : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!GameManager.GMInstance.inMenu)
+        if (!GameManager.instance.inMenu)
         {
-            GameManager.GMInstance.onPlanet = true;
+            GameManager.instance.onPlanet = true;
 
             Vector3 mousePos = Camera.main.WorldToScreenPoint(transform.position);
             mousePos = Input.mousePosition - mousePos;
@@ -43,6 +43,6 @@ public class RotatePlanet : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        GameManager.GMInstance.onPlanet = false;
+        GameManager.instance.onPlanet = false;
     }
 }

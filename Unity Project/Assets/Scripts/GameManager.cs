@@ -5,31 +5,35 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager GMInstance = null;
 
     [Tooltip("Set this to true, in order to skip the menu and go straight into the gameplay.")]
     public bool skipMenu= false;
+    public bool enableSorting;
 
     [HideInInspector] public bool inMenu = true;
     [HideInInspector] public bool onPlanet = false;
 
     [HideInInspector] public double secondsPassed;
     [HideInInspector] public string planetName;
+    [HideInInspector] public GameObject itemToPlace;
 
     private TimeController timeController;
     private PlanetCreation planetCreation;
 
+    #region Singleton
+    public static GameManager instance = null;
     private void Awake()
     {
-        if (GMInstance == null)
-            GMInstance = this;
-        else if (GMInstance != null)
+        if (instance == null)
+            instance = this;
+        else if (instance != null)
             Destroy(gameObject);
     }
+    #endregion
 
     private void Start ()
     {
-        // DELETE ALL PLAYERPREF KEYS. || ONLY FOR TESTING.
+        // DELETE ALL PLAYERPREF KEYS. || DEBUG ONLY, DELETE LATER.
         PlayerPrefs.DeleteAll();
 
         planetCreation = gameObject.GetComponent<PlanetCreation>();
@@ -46,6 +50,11 @@ public class GameManager : MonoBehaviour
     }
 
     #region FUNCTIONS USED TO CONTROL THE GAME
+
+    public void PlaceItem()
+    {
+
+    }
 
     public void LoadGame()
     {
@@ -78,6 +87,7 @@ public class GameManager : MonoBehaviour
     private void PlanetCreationMenu()
     {
         planetCreation.ShowCreationMenu();
+        
     }
 
     /* TEMP FUNCTIONS */

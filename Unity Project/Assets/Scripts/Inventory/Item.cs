@@ -9,10 +9,10 @@ public class Item : ScriptableObject {
     [Tooltip("This is the icon of the object, it will be displayed in the inventory when players pick it up.")]
     public Sprite itemIcon = null;
 
-
+    // Called when pressed in the inventory.
     public virtual void UseItem()
     {
-        // Use the item, held in the inventory.
+        // Use the item
         
         Debug.Log("Using: " + name);
     }

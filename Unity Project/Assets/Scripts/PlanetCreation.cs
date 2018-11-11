@@ -35,8 +35,8 @@ public class PlanetCreation : MonoBehaviour
 
                 if (_tempPlanetName != "" || _tempPlanetName != " ")
                 {
-                    GameManager.GMInstance.planetName = _tempPlanetName;
-                    GameManager.GMInstance.StartGame();
+                    GameManager.instance.planetName = _tempPlanetName;
+                    GameManager.instance.StartGame();
                     StartCoroutine(MenuDisappearDelay());
                     isActive = false;
                 }

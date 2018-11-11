@@ -27,7 +27,10 @@ public class ItemsSorting : MonoBehaviour
 
     private void Start()
     {
-        SpawnNewObject();
+        if (GameManager.instance.enableSorting)
+            SpawnNewObject();
+
+        StartCoroutine(TestReward());
     }
 
     private void Update()
@@ -64,8 +67,10 @@ public class ItemsSorting : MonoBehaviour
 
     private void RewardPlayer()
     {
-        Item tempReward = rewards[Random.Range(0, rewards.Length)];
-        Inventory.instance.Add(tempReward);
+        Item item = rewards[0];
+        bool wasPickedUp = Inventory.instance.Add(item);
+
+        Debug.Log("Rewarding player: " + item.name);
     }
 
     private void SpawnNewObject()
@@ -86,5 +91,14 @@ public class ItemsSorting : MonoBehaviour
         spawnedItem = newSortItem;
 
         StopCoroutine(SpawnNewItem());
+    }
+
+    IEnumerator TestReward()
+    {
+        yield return new WaitForSeconds(.1f);
+
+        RewardPlayer();
+
+        StopCoroutine(TestReward());
     }
 }

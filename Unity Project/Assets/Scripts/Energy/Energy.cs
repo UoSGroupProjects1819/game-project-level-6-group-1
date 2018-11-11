@@ -5,14 +5,12 @@ using UnityEngine.UI;
 
 public class Energy : MonoBehaviour
 {
-
-    [SerializeField] private TMPro.TMP_Text numberText;
     [SerializeField] private Image fillImage;
     [SerializeField] private float maxEnergy;
     [SerializeField] private float countTime;
+    [SerializeField] private float currentEnergy;
 
     private float startEnergy;
-    private float currentEnergy;
     private float desiredEnergy;
 
     #region Singleton
@@ -29,13 +27,14 @@ public class Energy : MonoBehaviour
     private void Start()
     {
         UpdateUI();
-        SetNumber(maxEnergy);
+        SetEnergy(maxEnergy);
+        RemoveEnergy(1);
     }
 
     /// <summary>
     /// Set the number to the 'value', this will not have the 'count up' effect.
     /// </summary>
-    public void SetNumber(float value)
+    public void SetEnergy(float value)
     {
         startEnergy = currentEnergy;
         desiredEnergy = value;

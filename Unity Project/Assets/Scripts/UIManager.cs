@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour {
 
     public void _StartGame()
     {
-        GameManager.GMInstance.LoadGame();
+        GameManager.instance.LoadGame();
     }
 
     public void _ShowInventory()
