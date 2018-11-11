@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public double secondsPassed;
     [HideInInspector] public string planetName;
     [HideInInspector] public GameObject itemToPlace;
+    [HideInInspector] public Item itemHolding;
 
+    private GameObject planet;
     private TimeController timeController;
     private PlanetCreation planetCreation;
 
@@ -31,17 +33,45 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    [HideInInspector] public enum GameState { Menu, Gameplay, Sorting, PlaceItem };
+    [HideInInspector] public GameState currentState;
+
     private void Start ()
     {
         // DELETE ALL PLAYERPREF KEYS. || DEBUG ONLY, DELETE LATER.
         PlayerPrefs.DeleteAll();
 
+        planet = GameObject.FindGameObjectWithTag("Player");
         planetCreation = gameObject.GetComponent<PlanetCreation>();
         timeController = gameObject.GetComponent<TimeController>();
 
         if (skipMenu)
             StartGame();
 	}
+
+    private void Update()
+    {
+        // THIS SHOULD BE IN ITS OWN SCRIPT
+        if (currentState == GameState.PlaceItem)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                Vector3 placePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                placePos.z = 0;
+
+                GameObject tempObject = Instantiate(itemToPlace, placePos, Quaternion.identity);
+                tempObject.transform.parent = planet.transform;
+                tempObject.name = itemHolding.name;
+
+                // Cleanup
+                currentState = GameState.Gameplay;
+
+                tempObject = null;
+                itemHolding = null;
+                itemToPlace = null;
+            }
+        }
+    }
 
     private void OnApplicationQuit()
     {
@@ -80,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Start game!");
-        UIManager.UIInstance.GameUI();
+        UIManager.instance.GameUI();
         inMenu = false;
     }
 

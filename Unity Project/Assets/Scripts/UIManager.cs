@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(GameManager))]
 public class UIManager : MonoBehaviour {
 
-    public static UIManager UIInstance = null;
+    public static UIManager instance = null;
 
     [SerializeField] private Animator planetNameAnim;
     [SerializeField] private GameObject inventoryUI;
@@ -18,9 +18,9 @@ public class UIManager : MonoBehaviour {
 
     private void Awake()
     {
-        if (UIInstance == null)
-            UIInstance = this;
-        else if (UIInstance != null)
+        if (instance == null)
+            instance = this;
+        else if (instance != null)
             Destroy(gameObject);
     }
 

@@ -3228,6 +3228,8 @@ MonoBehaviour:
   secondsPassed: 0
   planetName: 
   itemToPlace: {fileID: 0}
+  itemHolding: {fileID: 0}
+  currentState: 0
 --- !u!114 &375136162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7763,7 +7765,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4840072276706500, guid: 87853421774232f4aa6b4aa59177d9c2, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: 4840072276706500, guid: 87853421774232f4aa6b4aa59177d9c2, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7792,41 +7794,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87853421774232f4aa6b4aa59177d9c2, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &1261107727 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1893686035023930, guid: 87853421774232f4aa6b4aa59177d9c2,
-    type: 2}
-  m_PrefabInternal: {fileID: 1239673577}
 --- !u!4 &1261107728 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4840072276706500, guid: 87853421774232f4aa6b4aa59177d9c2,
     type: 2}
   m_PrefabInternal: {fileID: 1239673577}
---- !u!61 &1261107730
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1261107727}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2, y: 4}
-  m_EdgeRadius: 0
 --- !u!1 &1291799263
 GameObject:
   m_ObjectHideFlags: 0
@@ -8682,7 +8654,7 @@ GameObject:
   - component: {fileID: 1512695958}
   m_Layer: 0
   m_Name: PLANET
-  m_TagString: PlanetTag
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

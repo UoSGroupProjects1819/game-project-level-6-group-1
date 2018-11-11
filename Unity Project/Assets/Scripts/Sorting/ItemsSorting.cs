@@ -78,7 +78,7 @@ public class ItemsSorting : MonoBehaviour
 
     IEnumerator SpawnNewItem()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(.5f);
 
         GameObject newSortItem = Instantiate(sortingObjects[Random.Range(0, sortingObjects.Length)], itemsParent.transform, false);
         spawnedItem = newSortItem;

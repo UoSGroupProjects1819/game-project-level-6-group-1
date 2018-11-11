@@ -21,6 +21,12 @@ public class ObjectManager : MonoBehaviour {
         StartCoroutine(ManageGrowth(growthTime));
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
+
+
+        Vector3 difference = playerPlanet.transform.position - transform.position;
+        float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle + 90.0f));
 	}
 
     private void OnMouseDown()

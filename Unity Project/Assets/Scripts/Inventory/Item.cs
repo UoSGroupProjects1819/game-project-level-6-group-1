@@ -13,7 +13,9 @@ public class Item : ScriptableObject {
     public virtual void UseItem()
     {
         // Use the item
-        
+        UIManager.instance.ToggleInventoryUI();
+        GameManager.instance.currentState = GameManager.GameState.PlaceItem;
+
         Debug.Log("Using: " + name);
     }
 }

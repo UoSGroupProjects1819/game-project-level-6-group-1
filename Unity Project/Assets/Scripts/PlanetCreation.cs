@@ -20,7 +20,7 @@ public class PlanetCreation : MonoBehaviour
 
     public void ShowCreationMenu()
     {
-        UIManager.UIInstance.ShowCreationMenu();
+        UIManager.instance.ShowCreationMenu();
         isActive = true;
     }
 

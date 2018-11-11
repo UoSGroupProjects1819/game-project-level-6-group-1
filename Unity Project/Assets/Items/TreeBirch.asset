@@ -13,3 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Birch
   itemIcon: {fileID: 21300000, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
+  spawnObject: {fileID: 1893686035023930, guid: 87853421774232f4aa6b4aa59177d9c2,
+    type: 2}
