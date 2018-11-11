@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class InventoryUI : MonoBehaviour {
+public class InventoryUI : MonoBehaviour
+{
 
     public Transform itemsParent;
     public GameObject inventoryUI;

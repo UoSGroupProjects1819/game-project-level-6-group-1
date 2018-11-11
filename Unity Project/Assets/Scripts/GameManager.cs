@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager GMInstance = null;
 

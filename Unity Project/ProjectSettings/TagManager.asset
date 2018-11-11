@@ -8,6 +8,7 @@ TagManager:
   - PlanetTag
   - MainMenu
   - CreationMenu
+  - Vegetable
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - AboveUI
   - 
   - 
   - 
@@ -44,4 +45,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3080954091
+    locked: 0
+  - name: AboveUi
+    uniqueID: 2169049103
     locked: 0

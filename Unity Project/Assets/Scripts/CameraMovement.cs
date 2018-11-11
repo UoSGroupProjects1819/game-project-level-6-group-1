@@ -31,6 +31,7 @@ public class CameraMovement : MonoBehaviour {
     {
         // Set the moveTowards point to Camera's position at the start, so it doesn't run away.
         moveTowards = transform.position;
+        menuMode = true;
     }
 
     private void Update()
