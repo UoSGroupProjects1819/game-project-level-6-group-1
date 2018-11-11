@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Animator planetNameAnim;
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject sidebarUI;
+    [SerializeField] private GameObject sortingUI;
 
     [SerializeField] private Canvas gameCanvas;
     [SerializeField] private Canvas menuCanvas;
@@ -35,10 +36,10 @@ public class UIManager : MonoBehaviour {
         GameManager.instance.LoadGame();
     }
 
-    public void _ShowInventory()
+    public void ToggleSortingUI()
     {
-        // Show the seeds bag.
-        Debug.Log("Show inventory.");
+        sortingUI.SetActive(!sortingUI.activeSelf);
+        sidebarUI.SetActive(!sortingUI.activeSelf);
     }
 
     public void ToggleInventoryUI()
