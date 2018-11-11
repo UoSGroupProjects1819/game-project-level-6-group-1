@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
+    public delegate void OnItemChanged();
+    public OnItemChanged onItemChangedCallback;
+
+    public List<Item> items = new List<Item>();
+    [SerializeField] private int inventorySpace = 20;
+
     #region Singleton
+    public static Inventory instance;
     private void Awake()
     {
         if (instance == null)
@@ -13,12 +20,6 @@ public class Inventory : MonoBehaviour {
             Destroy(gameObject);
     }
     #endregion
-    public static Inventory instance;
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChangedCallback;
-
-    public List<Item> items = new List<Item>();
-    [SerializeField] private int inventorySpace = 20;
 
     public bool Add(Item item)
     {
