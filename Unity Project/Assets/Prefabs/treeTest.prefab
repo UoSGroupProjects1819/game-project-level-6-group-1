@@ -140,7 +140,7 @@ MonoBehaviour:
   sprRenderer: {fileID: 212969637792870434}
   finishedSprite: {fileID: 21300030, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   growingSprite: {fileID: 21300026, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
-  growthTime: 0.1
+  growthTime: 15
   targetTime: 0
   desiredSize: {x: 1, y: 1, z: 1}
   collectStar: {fileID: 1970320722827306}
