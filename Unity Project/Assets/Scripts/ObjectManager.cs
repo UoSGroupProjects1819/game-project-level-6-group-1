@@ -11,7 +11,10 @@ public class ObjectManager : MonoBehaviour {
     [SerializeField] private float targetTime;
     [SerializeField] private Vector3 desiredSize;
     [SerializeField] private GameObject collectStar;
+    [SerializeField] private TMPro.TMP_Text timeText;
 
+    private float remainTime;
+    private float currentTime;
     private bool finishedGrowing;
     private GameObject playerPlanet;
 
@@ -54,10 +57,16 @@ public class ObjectManager : MonoBehaviour {
     //    transform.position = movePos;
     //}
 
+    private void Update()
+    {
+
+        timeText.text =  remainTime.ToString("0");
+    }
+
     IEnumerator ManageGrowth (float time)
     {
         Vector3 startingSize = gameObject.transform.localScale;
-        float currentTime = 0.0f;
+        currentTime = 0.0f;
 
         targetTime = Time.time + growthTime;
 
@@ -65,6 +74,7 @@ public class ObjectManager : MonoBehaviour {
         {
             gameObject.transform.localScale = Vector3.Lerp(startingSize, desiredSize, currentTime / targetTime);
             currentTime = Time.time;
+            remainTime = targetTime - currentTime;
             yield return null;
         } while (currentTime <= targetTime);
 

@@ -9,6 +9,7 @@ TagManager:
   - MainMenu
   - CreationMenu
   - Vegetable
+  - Fruit
   layers:
   - Default
   - TransparentFX

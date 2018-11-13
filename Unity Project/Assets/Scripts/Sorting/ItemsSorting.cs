@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ItemsSorting : MonoBehaviour
 {
-    [SerializeField] private Item[] rewards;
+    [Header("Player Rewards")]
+    [SerializeField] private Item[] vegetableRewards;
+    [SerializeField] private Item[] fruitRewards;
+
     [SerializeField] private GameObject[] sortingObjects;
     [SerializeField] private TMPro.TMP_Text debugSortedCounter;
     [SerializeField] private GameObject itemsParent;
@@ -12,6 +15,7 @@ public class ItemsSorting : MonoBehaviour
     [HideInInspector] public int itemsSortedCorrectly;
 
     private bool spawnedObject = false;
+    private bool rewarded = false;
     private GameObject spawnedItem;
 
     #region Singleton
@@ -61,8 +65,24 @@ public class ItemsSorting : MonoBehaviour
 
     private void RewardPlayer()
     {
-        Item item = rewards[0];
+        int rand = Random.Range(0, 2);
+        Item item = null;
+
+        if (rand == 0)
+        {
+            item = vegetableRewards[Random.Range(0, vegetableRewards.Length)];
+        }
+
+        if (rand == 1)
+        {
+            item = fruitRewards[Random.Range(0, fruitRewards.Length)];
+        }
+
+        if (item == null)
+            Debug.LogError("No reward found! Could not chose a reward!");
+
         bool wasPickedUp = Inventory.instance.Add(item);
+        rewarded = true;
 
         Debug.Log("Rewarding player: " + item.name);
     }
@@ -80,14 +100,5 @@ public class ItemsSorting : MonoBehaviour
         spawnedItem = newSortItem;
 
         StopCoroutine(SpawnNewItem());
-    }
-
-    IEnumerator TestReward()
-    {
-        yield return new WaitForSeconds(.1f);
-
-        RewardPlayer();
-
-        StopCoroutine(TestReward());
     }
 }

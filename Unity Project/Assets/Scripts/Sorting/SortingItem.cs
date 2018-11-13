@@ -19,23 +19,32 @@ public class SortingItem : MonoBehaviour
 
     public void OnMouseDrag()
     {
-        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-        Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
-        objPos.z = 0;
+        if (Energy.instance.hasEnergy)
+        {
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
+            objPos.z = 0;
 
-        transform.position = objPos;
+            transform.position = objPos;
+        }
+        else { return; }
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.transform.tag == "Vegetable" && currentItem == ItemType.Vegetable)
+        if (coll.gameObject.layer == LayerMask.NameToLayer("UI"))
         {
-            ItemsSorting.instance.SortedCorrectly(gameObject);
-        }
+            if (coll.transform.tag == "Vegetable" && currentItem == ItemType.Vegetable)
+            {
+                ItemsSorting.instance.SortedCorrectly(gameObject);
+            }
+            else { ItemsSorting.instance.SortedIncorrectly(gameObject); }
 
-        if (coll.tag == "Fruit" && currentItem == ItemType.Fruit)
-        {
-            ItemsSorting.instance.SortedCorrectly(gameObject);
+            if (coll.tag == "Fruit" && currentItem == ItemType.Fruit)
+            {
+                ItemsSorting.instance.SortedCorrectly(gameObject);
+            }
+            //else { ItemsSorting.instance.SortedIncorrectly(gameObject); }
         }
     }
 }

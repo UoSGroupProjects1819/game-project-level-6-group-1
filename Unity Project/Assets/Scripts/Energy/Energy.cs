@@ -9,6 +9,9 @@ public class Energy : MonoBehaviour
     [SerializeField] private float maxEnergy;
     [SerializeField] private float countTime;
     [SerializeField] private float currentEnergy;
+    [SerializeField] private bool infiniteEnergy;
+
+    [HideInInspector] public bool hasEnergy;
 
     private float startEnergy;
     private float desiredEnergy;
@@ -57,6 +60,14 @@ public class Energy : MonoBehaviour
 
     private void Update()
     {
+        if (infiniteEnergy)
+            desiredEnergy = maxEnergy;
+
+        if (currentEnergy > 0)
+            hasEnergy = true;
+        else
+            hasEnergy = false;
+
         if (currentEnergy == maxEnergy && desiredEnergy == currentEnergy)
             return;
 
