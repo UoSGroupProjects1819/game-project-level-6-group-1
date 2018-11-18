@@ -38,9 +38,13 @@ public class ItemsSorting : MonoBehaviour
 
     private void Update()
     {
-        if (itemsSortedCorrectly == 5)
+        if (itemsSortedCorrectly == 1)
         {
-            RewardPlayer();
+            bool playerRewarded = Inventory.instance.Add(RewardPlayer());
+
+            if (playerRewarded)
+                rewarded = true;
+
             itemsSortedCorrectly = 0;
         }
     }
@@ -62,28 +66,49 @@ public class ItemsSorting : MonoBehaviour
         SpawnNewObject();
     }
 
-    private void RewardPlayer()
+    private Item RewardPlayer()
+    {
+        float total = 0;
+        Item[] itemArray = SelectCategory();
+
+        if (itemArray == null)
+            Debug.LogError("Reward array is empty, could not SelectCategory!");
+
+
+        foreach (Item _item in itemArray)
+        {
+            total += _item.probability;
+        }
+
+        float randomPoint = Random.value * total;
+
+        for (int i = 0; i < itemArray.Length; i++)
+        {
+            if (randomPoint < itemArray[i].probability)
+            {
+                Debug.Log("Player rewarded " + itemArray[i].name);
+                return itemArray[i];
+            }
+            else
+            {
+                randomPoint -= itemArray[i].probability;
+            }
+        }
+
+        Debug.Log("Reward not found, rewarding last item.");
+        return itemArray[itemArray.Length -1];
+    }
+
+    public Item[] SelectCategory()
     {
         int rand = Random.Range(0, 2);
-        Item item = null;
 
         if (rand == 0)
-        {
-            item = vegetableRewards[Random.Range(0, vegetableRewards.Length)];
-        }
-
-        if (rand == 1)
-        {
-            item = fruitRewards[Random.Range(0, fruitRewards.Length)];
-        }
-
-        if (item == null)
-            Debug.LogError("No reward found! Could not chose a reward!");
-
-        bool wasPickedUp = Inventory.instance.Add(item);
-        rewarded = true;
-
-        Debug.Log("Rewarding player: " + item.name);
+            return vegetableRewards;
+        else if (rand == 1)
+            return fruitRewards;
+        else
+            return null;
     }
 
     private void SpawnNewObject()

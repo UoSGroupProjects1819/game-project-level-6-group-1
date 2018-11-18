@@ -20,8 +20,14 @@ public class PlanetObject : MonoBehaviour {
     private float targetTime;
     private float remainTime;
     private float currentTime;
+    private float elapsedTime;
 
+    private float waterInterval;
+    private float currentWaterTimer;
+
+    private bool enableWatering = false;    // FOR TESTING PURPOSOES, DISABLED WATERING.
     private bool finishedGrowing;
+    private bool isWatered;
 
     private GameObject playerPlanet;
     private GameObject timerParent;
@@ -37,17 +43,24 @@ public class PlanetObject : MonoBehaviour {
 
         transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 
+        isWatered = true;
         energyStar.SetActive(false);
 
-        // Make sure we have the scriptable object to get data from.
-        //if (scriptableObject != null)
         InitializeVariables();
-
         SetObjectRotation();
     }
 
     private void Update()
     {
+        if (isWatered && enableWatering)
+            currentWaterTimer -= Time.deltaTime;
+
+        if (currentWaterTimer <= 0)
+        {
+            currentWaterTimer = waterInterval;
+            isWatered = false;
+        }
+
         if (Camera.main.orthographicSize < 3)
         {
             timerParent.GetComponent<Image>().CrossFadeAlpha(1.0f, 0.2f, true);
@@ -63,11 +76,12 @@ public class PlanetObject : MonoBehaviour {
 
     private void InitializeVariables()
     {
-        // Get the variables from the scriptable object.
         growingSprite   = scrObject.objectSprites[0];
         finishedSprite  = scrObject.objectSprites[1];
 
         growthTime = scrObject.growthTime;
+
+        waterInterval = scrObject.wateringInterval;
 
         StartCoroutine(ManageGrowth(growthTime));
     }
@@ -99,7 +113,26 @@ public class PlanetObject : MonoBehaviour {
             energyStar.SetActive(false);
             Energy.instance.AddEnergy(1);
         }
+
+        if (!isWatered)
+            isWatered = true;
     }
+
+    private bool CheckForWateredBool()
+    {
+        if (isWatered)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /*
+     * FIX THE BUG, WHERE THE TIME IS COUNTED WHILE THE TREE HAS STOPPED GROWING.
+     */
 
     IEnumerator ManageGrowth(float growthTime)
     {
@@ -109,24 +142,34 @@ public class PlanetObject : MonoBehaviour {
         currentTime = 0.0f;
         targetTime  = Time.time + growthTime;
 
+        currentWaterTimer = waterInterval;
+
         sprRenderer.sprite = growingSprite;
 
         do
         {
+            //if (!isWatered)
+            //    yield return new WaitUntil(CheckForWateredBool);
+
+
             gameObject.transform.localScale = Vector3.Lerp(startSize, desiredSize, currentTime / targetTime);
 
             currentTime = Time.time;
-            remainTime = targetTime - currentTime;
+            remainTime  = targetTime - currentTime;
+            elapsedTime = elapsedTime + currentTime;
+
+            if (currentTime == targetTime)
+                finishedGrowing = true;
 
             yield return null;
         } while (currentTime <= targetTime);
 
+
         sprRenderer.sprite = finishedSprite;
+        finishedGrowing = true;
 
         timerParent.SetActive(false);
         energyStar.SetActive(true);
-
-        finishedGrowing = true;
 
         StopCoroutine(ManageGrowth(0));
     }
