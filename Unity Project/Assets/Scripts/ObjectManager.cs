@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectManager : MonoBehaviour {
 
@@ -17,8 +18,9 @@ public class ObjectManager : MonoBehaviour {
     private float currentTime;
     private bool finishedGrowing;
     private GameObject playerPlanet;
+    private GameObject timePanel;
 
-	void Start ()
+    void Start()
     {
         collectStar.SetActive(false);
         StartCoroutine(ManageGrowth(growthTime));
@@ -30,7 +32,9 @@ public class ObjectManager : MonoBehaviour {
         float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle + 90.0f));
-	}
+
+        timePanel = timeText.transform.parent.gameObject;
+    }
 
     private void OnMouseDown()
     {
@@ -59,8 +63,28 @@ public class ObjectManager : MonoBehaviour {
 
     private void Update()
     {
+        if (Camera.main.orthographicSize < 3)
+        {
+            timePanel.GetComponent<Image>().CrossFadeAlpha(1.0f, 0.2f, true);
+            timeText.CrossFadeAlpha(1.0f, 0.2f, true);
+            DisplayTime(remainTime, timeText);
+        }
+        else
+        {
+            timePanel.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.2f, true);
+            timeText.CrossFadeAlpha(0.0f, 0.2f, true);
+        } 
+    }
 
-        timeText.text =  remainTime.ToString("0");
+    private void DisplayTime (float timeInSeconds, TMPro.TMP_Text targetText)
+    {
+        int seconds = (int)(timeInSeconds % 60);
+        int minutes = (int)(timeInSeconds / 60) % 60;
+        int hours = (int)(timeInSeconds / 3600) % 24;
+
+        string timeString = string.Format("{0:00}h {1:00}m {2:00}s", hours, minutes, seconds);
+
+        timeText.text = timeString;
     }
 
     IEnumerator ManageGrowth (float time)
@@ -79,8 +103,11 @@ public class ObjectManager : MonoBehaviour {
         } while (currentTime <= targetTime);
 
         sprRenderer.sprite = finishedSprite;
+
+        timeText.transform.parent.gameObject.SetActive(false);
         collectStar.SetActive(true);
         finishedGrowing = true;
+
         StopCoroutine(ManageGrowth(0));
     }
 }

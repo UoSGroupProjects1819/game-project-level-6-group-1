@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public string planetName;
     [HideInInspector] public GameObject itemToPlace;
     [HideInInspector] public Item itemHolding;
+    [HideInInspector] public GameObject playerPlanet;
 
-    private GameObject planet;
     private TimeController timeController;
     private PlanetCreation planetCreation;
 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         // DELETE ALL PLAYERPREF KEYS. || DEBUG ONLY, DELETE LATER.
         PlayerPrefs.DeleteAll();
 
-        planet = GameObject.FindGameObjectWithTag("Player");
+        playerPlanet = GameObject.FindGameObjectWithTag("Player");
         planetCreation = gameObject.GetComponent<PlanetCreation>();
         timeController = gameObject.GetComponent<TimeController>();
 
@@ -51,16 +51,19 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // THIS SHOULD BE IN ITS OWN SCRIPT
+        // THIS SHOULD BE IN ITS OWN THING
         if (currentState == GameState.PlaceItem)
         {
-            if (Input.GetMouseButtonDown(1))
+            inMenu = true;
+
+            if (Input.GetMouseButtonDown(0))
             {
                 Vector3 placePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 placePos.z = 0;
 
                 GameObject tempObject = Instantiate(itemToPlace, placePos, Quaternion.identity);
-                tempObject.transform.parent = planet.transform;
+                tempObject.GetComponentInChildren<PlanetObject>().scrObject = itemHolding;
+                tempObject.transform.parent = playerPlanet.transform;
                 tempObject.name = itemHolding.name;
 
                 // Cleanup
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
                 tempObject = null;
                 itemHolding = null;
                 itemToPlace = null;
+                inMenu = false;
             }
         }
     }

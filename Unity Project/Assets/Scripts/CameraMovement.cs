@@ -43,8 +43,9 @@ public class CameraMovement : MonoBehaviour {
         if (GameManager.instance.inMenu)
         {
             // The camera is in the menu mode, which means players are not able to control the camera directly.
-            transform.position = Vector3.MoveTowards(
-                transform.position, moveTowards, cameraMenuSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(
+            //    transform.position, moveTowards, cameraMenuSpeed * Time.deltaTime);
+            return;
         }
         else
         {

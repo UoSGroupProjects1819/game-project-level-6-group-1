@@ -9,7 +9,6 @@ public class ItemsSorting : MonoBehaviour
     [SerializeField] private Item[] fruitRewards;
 
     [SerializeField] private GameObject[] sortingObjects;
-    [SerializeField] private TMPro.TMP_Text debugSortedCounter;
     [SerializeField] private GameObject itemsParent;
 
     [HideInInspector] public int itemsSortedCorrectly;
@@ -34,7 +33,7 @@ public class ItemsSorting : MonoBehaviour
         //if (GameManager.instance.enableSorting)
             SpawnNewObject();
 
-        //StartCoroutine(TestReward());
+        RewardPlayer();
     }
 
     private void Update()
