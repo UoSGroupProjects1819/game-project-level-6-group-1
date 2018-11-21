@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SortingItem : MonoBehaviour
 {
-    [SerializeField] private ItemType currentItem = ItemType.None;
-    private enum ItemType { None, Vegetable, Fruit };
+    public ItemType currentItem = ItemType.None;
+    public enum ItemType { None, Vegetable, Fruit };
 
     private void Start()
     {

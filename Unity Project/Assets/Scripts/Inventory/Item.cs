@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Planet Item")]
+[CreateAssetMenu(fileName = "New Planet Item", menuName = "Items/Planet Item")]
 public class Item : ScriptableObject {
     /* MAKE THE VARIABLES PRIVATE AT SOME POINT && USE GETTERES */
 

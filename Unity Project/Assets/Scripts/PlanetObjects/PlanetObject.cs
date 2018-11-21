@@ -12,7 +12,7 @@ public class PlanetObject : MonoBehaviour {
     [SerializeField] private TMPro.TMP_Text timerText;
 
     [Header("Debug Stuff")]
-    private bool enableWatering = false;
+    [SerializeField] private bool enableWatering = false;
 
     [HideInInspector] public Item scrObject;
 
