@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public bool skipMenu= false;
     public bool enableSorting;
 
-    [HideInInspector] public bool inMenu = true;
+    [HideInInspector] public bool inMenu = false;
     [HideInInspector] public bool onPlanet = false;
 
     [HideInInspector] public double secondsPassed;

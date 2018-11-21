@@ -19,5 +19,5 @@ MonoBehaviour:
   - {fileID: 21300026, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   - {fileID: 21300020, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   growthTime: 25
-  wateringInterval: 0
+  wateringInterval: 20
   probability: 15

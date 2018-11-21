@@ -5,10 +5,14 @@ using UnityEngine.UI;
 
 public class PlanetObject : MonoBehaviour {
 
+    [Header("Object Properties")]
     [Tooltip("This is the start that players will collect for additional energy.")]
     [SerializeField] private GameObject energyStar;
     [Tooltip("This is the timer that displays how much longer the object has left to grow.")]
     [SerializeField] private TMPro.TMP_Text timerText;
+
+    [Header("Debug Stuff")]
+    private bool enableWatering = false;
 
     [HideInInspector] public Item scrObject;
 
@@ -25,7 +29,6 @@ public class PlanetObject : MonoBehaviour {
     private float waterInterval;
     private float currentWaterTimer;
 
-    private bool enableWatering = false;    // FOR TESTING PURPOSOES, DISABLED WATERING.
     private bool finishedGrowing;
     private bool isWatered;
 
@@ -44,6 +47,8 @@ public class PlanetObject : MonoBehaviour {
         transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 
         isWatered = true;
+        currentWaterTimer = waterInterval;
+
         energyStar.SetActive(false);
 
         InitializeVariables();
@@ -80,7 +85,6 @@ public class PlanetObject : MonoBehaviour {
         finishedSprite  = scrObject.objectSprites[1];
 
         growthTime = scrObject.growthTime;
-
         waterInterval = scrObject.wateringInterval;
 
         StartCoroutine(ManageGrowth(growthTime));
@@ -115,13 +119,17 @@ public class PlanetObject : MonoBehaviour {
         }
 
         if (!isWatered)
+        {
             isWatered = true;
+            currentWaterTimer = waterInterval;
+        }
     }
 
     private bool CheckForWateredBool()
     {
-        if (isWatered)
+        if (isWatered && enableWatering)
         {
+            targetTime = Time.time + remainTime;
             return true;
         }
         else
@@ -129,10 +137,6 @@ public class PlanetObject : MonoBehaviour {
             return false;
         }
     }
-
-    /*
-     * FIX THE BUG, WHERE THE TIME IS COUNTED WHILE THE TREE HAS STOPPED GROWING.
-     */
 
     IEnumerator ManageGrowth(float growthTime)
     {
@@ -143,20 +147,17 @@ public class PlanetObject : MonoBehaviour {
         targetTime  = Time.time + growthTime;
 
         currentWaterTimer = waterInterval;
-
         sprRenderer.sprite = growingSprite;
 
         do
         {
-            //if (!isWatered)
-            //    yield return new WaitUntil(CheckForWateredBool);
-
+            if (!isWatered && enableWatering)
+                yield return new WaitUntil(CheckForWateredBool);
 
             gameObject.transform.localScale = Vector3.Lerp(startSize, desiredSize, currentTime / targetTime);
 
             currentTime = Time.time;
             remainTime  = targetTime - currentTime;
-            elapsedTime = elapsedTime + currentTime;
 
             if (currentTime == targetTime)
                 finishedGrowing = true;

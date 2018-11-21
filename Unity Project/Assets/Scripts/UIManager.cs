@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour {
 
     public void ToggleInventoryUI()
     {
+        GameManager.instance.inMenu = !GameManager.instance.inMenu;
         inventoryUI.SetActive(!inventoryUI.activeSelf);
         sidebarUI.SetActive(!inventoryUI.activeSelf);
     }
