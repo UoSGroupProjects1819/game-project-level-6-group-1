@@ -62,8 +62,9 @@ public class GameManager : MonoBehaviour
                 placePos.z = 0;
 
                 GameObject tempObject = Instantiate(itemToPlace, placePos, Quaternion.identity);
-                tempObject.GetComponentInChildren<PlanetObject>().scrObject = itemHolding;
                 tempObject.transform.parent = playerPlanet.transform;
+
+                tempObject.GetComponentInChildren<PlanetObject>().scrObject = itemHolding;
                 tempObject.name = itemHolding.name;
 
                 // Cleanup

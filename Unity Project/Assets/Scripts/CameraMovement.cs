@@ -10,9 +10,6 @@ public class CameraMovement : MonoBehaviour {
     [Tooltip("This is the camera's maximum size, players won't be able to zoom out more than this value.")]
     [SerializeField] private float cameraMaxSize    = 14.0f;
 
-    [Tooltip("This is the value used to control the camera movement speed in the menu, increasing this value will make the camera move from one menu to another faster while decreasing it will make it move slower.")]
-    [SerializeField] private float cameraMenuSpeed  = 70.0f;
-
     [Tooltip("This is how far the players can move the camera (in Unity's units), use this to limit player's camera movement.")]
     [SerializeField] private float camMaxX, camMaxY;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemsSorting : MonoBehaviour
+public class Sorting : MonoBehaviour
 {
     [Header("Player Rewards")]
     [SerializeField] private Item[] vegetableRewards;
@@ -13,12 +13,8 @@ public class ItemsSorting : MonoBehaviour
 
     [HideInInspector] public int itemsSortedCorrectly;
 
-    private bool spawnedObject = false;
-    private bool rewarded = false;
-    private GameObject spawnedItem;
-
     #region Singleton
-    public static ItemsSorting instance;
+    public static Sorting instance;
     private void Awake()
     {
         if (instance == null)
@@ -33,7 +29,7 @@ public class ItemsSorting : MonoBehaviour
         //if (GameManager.instance.enableSorting)
             SpawnNewObject();
 
-        RewardPlayer();
+        //RewardPlayer();
     }
 
     private void Update()
@@ -42,8 +38,8 @@ public class ItemsSorting : MonoBehaviour
         {
             bool playerRewarded = Inventory.instance.Add(RewardPlayer());
 
-            if (playerRewarded)
-                rewarded = true;
+            if (!playerRewarded)
+                Debug.Log("Could not reward player!");
 
             itemsSortedCorrectly = 0;
         }
@@ -118,10 +114,9 @@ public class ItemsSorting : MonoBehaviour
 
     IEnumerator SpawnNewItem()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.05f);
 
-        GameObject newSortItem = Instantiate(sortingObjects[Random.Range(0, sortingObjects.Length)], itemsParent.transform, false);
-        spawnedItem = newSortItem;
+        Instantiate(sortingObjects[Random.Range(0, sortingObjects.Length)], itemsParent.transform, false);
 
         StopCoroutine(SpawnNewItem());
     }
