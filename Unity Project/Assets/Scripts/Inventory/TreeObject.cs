@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TreeObject : Item {
+public class TreeObject : InventoryItem {
 
     
 

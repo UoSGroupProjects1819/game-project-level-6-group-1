@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public double secondsPassed;
     [HideInInspector] public string planetName;
     [HideInInspector] public GameObject itemToPlace;
-    [HideInInspector] public Item itemHolding;
+    [HideInInspector] public InventoryItem itemHolding;
     [HideInInspector] public GameObject playerPlanet;
 
     private TimeController timeController;

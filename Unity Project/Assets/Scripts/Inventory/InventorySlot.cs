@@ -7,12 +7,12 @@ public class InventorySlot : MonoBehaviour
     public Image icon;
     public Button removeButton;
 
-    Item item;
+    InventoryItem item;
 
     /// <summary>
     /// Add a new item to the inventory list.
     /// </summary>
-    public void AddItem(Item newItem)
+    public void AddItem(InventoryItem newItem)
     {
         item = newItem;
         icon.sprite = item.itemIcon;

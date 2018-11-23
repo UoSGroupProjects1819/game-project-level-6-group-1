@@ -14,7 +14,7 @@ public class PlanetObject : MonoBehaviour {
     [Header("Debug Stuff")]
     [SerializeField] private bool enableWatering = false;
 
-    public Item scrObject;
+    public InventoryItem scrObject;
 
     private SpriteRenderer sprRenderer;
     private Sprite growingSprite;

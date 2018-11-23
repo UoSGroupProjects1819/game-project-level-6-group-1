@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    public List<Item> items = new List<Item>();
+    public List<InventoryItem> items = new List<InventoryItem>();
     [SerializeField] private int inventorySpace = 20;
 
     #region Singleton
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
     }
     #endregion
 
-    public bool Add(Item item)
+    public bool Add(InventoryItem item)
     {
         if (items.Count >= inventorySpace)
         {
@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void Remove(Item item)
+    public void Remove(InventoryItem item)
     {
         items.Remove(item);
 

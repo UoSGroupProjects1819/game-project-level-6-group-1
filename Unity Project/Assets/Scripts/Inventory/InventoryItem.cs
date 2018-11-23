@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Planet Item", menuName = "Items/Planet Item")]
-public class Item : ScriptableObject {
+public class InventoryItem : ScriptableObject {
     /* MAKE THE VARIABLES PRIVATE AT SOME POINT && USE GETTERES */
 
     [Header("Item Properties")]

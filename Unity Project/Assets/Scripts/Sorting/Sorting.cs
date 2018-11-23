@@ -5,13 +5,16 @@ using UnityEngine;
 public class Sorting : MonoBehaviour
 {
     [Header("Player Rewards")]
-    [SerializeField] private Item[] vegetableRewards;
-    [SerializeField] private Item[] fruitRewards;
+    [SerializeField] private InventoryItem[] vegetableRewards;
+    [SerializeField] private InventoryItem[] fruitRewards;
 
-    [SerializeField] private GameObject[] sortingObjects;
+    [SerializeField] private SortingItem[] sortingObjects;
+    [SerializeField] private GameObject sortingObjectPrefab;
     [SerializeField] private GameObject itemsParent;
 
     [HideInInspector] public int itemsSortedCorrectly;
+
+    private GameObject spawnedItem;
 
     #region Singleton
     public static Sorting instance;
@@ -26,10 +29,7 @@ public class Sorting : MonoBehaviour
 
     private void Start()
     {
-        //if (GameManager.instance.enableSorting)
-            SpawnNewObject();
-
-        //RewardPlayer();
+        SpawnNewObject();
     }
 
     private void Update()
@@ -62,16 +62,16 @@ public class Sorting : MonoBehaviour
         SpawnNewObject();
     }
 
-    private Item RewardPlayer()
+    private InventoryItem RewardPlayer()
     {
         float total = 0;
-        Item[] itemArray = SelectCategory();
+        InventoryItem[] itemArray = SelectCategory();
 
         if (itemArray == null)
             Debug.LogError("Reward array is empty, could not SelectCategory!");
 
 
-        foreach (Item _item in itemArray)
+        foreach (InventoryItem _item in itemArray)
         {
             total += _item.probability;
         }
@@ -95,7 +95,7 @@ public class Sorting : MonoBehaviour
         return itemArray[itemArray.Length -1];
     }
 
-    public Item[] SelectCategory()
+    public InventoryItem[] SelectCategory()
     {
         int rand = Random.Range(0, 2);
 
@@ -116,7 +116,10 @@ public class Sorting : MonoBehaviour
     {
         yield return new WaitForSeconds(.05f);
 
-        Instantiate(sortingObjects[Random.Range(0, sortingObjects.Length)], itemsParent.transform, false);
+        spawnedItem = Instantiate(sortingObjectPrefab, itemsParent.transform, false);
+        spawnedItem.GetComponent<SortingObject>().scrObject = sortingObjects[Random.Range(0, sortingObjects.Length)];
+            
+        //Instantiate(sortingObjects[Random.Range(0, sortingObjects.Length)], itemsParent.transform, false);
 
         StopCoroutine(SpawnNewItem());
     }

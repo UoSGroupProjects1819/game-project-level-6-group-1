@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SortingObject : MonoBehaviour {
 
     [HideInInspector] public SortingItem scrObject;
+    [HideInInspector] public int itemType = 0;
 
-    private int itemType = 0;
     private int energyConsume;
-    private SpriteRenderer sprRenderer;
+    private Image objectGraphic;
     private RectTransform rectTransform;
     private BoxCollider2D objectCollider;
 
@@ -16,7 +17,7 @@ public class SortingObject : MonoBehaviour {
     {
         rectTransform   = GetComponent<RectTransform>();
         objectCollider  = GetComponent<BoxCollider2D>();
-        sprRenderer     = GetComponentInChildren<SpriteRenderer>();
+        objectGraphic   = GetComponentInChildren<Image>();
 
         InitializeVariables();
     }
@@ -27,7 +28,7 @@ public class SortingObject : MonoBehaviour {
         if (itemType == 0)
             Debug.Log("Item type not set/Invalid item type, on " + gameObject.name);
 
-        sprRenderer.sprite = scrObject.objSprite;
+        objectGraphic.sprite = scrObject.objSprite;
         energyConsume = scrObject.energyConsume;
     }
 

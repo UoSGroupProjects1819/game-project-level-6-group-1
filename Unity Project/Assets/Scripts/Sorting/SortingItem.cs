@@ -17,14 +17,14 @@ public class SortingItem : ScriptableObject
 
         switch (itemType)
         {
+            case ItemType.None:
+                itemCat = 0;
+                break;
             case ItemType.Vegetable:
                 itemCat = 1;
                 break;
             case ItemType.Fruit:
                 itemCat = 2;
-                break;
-            case ItemType.None:
-                itemCat = 0;
                 break;
         }
 
