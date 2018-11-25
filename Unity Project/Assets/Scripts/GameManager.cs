@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public bool skipMenu= false;
     public bool enableSorting;
 
-    [HideInInspector] public bool inMenu = false;
+    [HideInInspector] public bool enableCameraMovement = false;
     [HideInInspector] public bool onPlanet = false;
 
     [HideInInspector] public double secondsPassed;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         // THIS SHOULD BE IN ITS OWN THING
         if (currentState == GameState.PlaceItem)
         {
-            inMenu = true;
+            enableCameraMovement = true;
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -75,16 +75,16 @@ public class GameManager : MonoBehaviour
                 tempObject = null;
                 itemHolding = null;
                 itemToPlace = null;
-                inMenu = false;
+                enableCameraMovement = false;
             }
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        // When quitting the game, save the time to PlayerPrefs.
-        timeController.SaveTime();
-    }
+    //private void OnApplicationQuit()
+    //{
+    //    // When quitting the game, save the time to PlayerPrefs.
+    //    timeController.SaveTime();
+    //}
 
     #region FUNCTIONS USED TO CONTROL THE GAME
 
@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Start game!");
         UIManager.instance.GameUI();
-        inMenu = false;
+        enableCameraMovement = false;
     }
 
     private void PlanetCreationMenu()

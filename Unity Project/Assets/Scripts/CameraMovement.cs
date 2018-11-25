@@ -37,7 +37,7 @@ public class CameraMovement : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (GameManager.instance.inMenu)
+        if (GameManager.instance.enableCameraMovement)
         {
             // The camera is in the menu mode, which means players are not able to control the camera directly.
             //transform.position = Vector3.MoveTowards(
@@ -86,7 +86,7 @@ public class CameraMovement : MonoBehaviour {
 
         // Clamp the camera movement, so players can't loose track of the planet.
         // Only do it while we are not in the menu.
-        if (!GameManager.instance.inMenu)
+        if (!GameManager.instance.enableCameraMovement)
         {
             transform.position = new Vector3(
                 Mathf.Clamp(transform.position.x, -10, 10),

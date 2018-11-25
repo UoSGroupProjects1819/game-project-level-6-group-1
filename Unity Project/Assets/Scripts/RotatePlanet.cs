@@ -11,7 +11,7 @@ public class RotatePlanet : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!GameManager.instance.inMenu)
+        if (!GameManager.instance.enableCameraMovement)
         {
             GameManager.instance.onPlanet = true;
 
@@ -29,7 +29,7 @@ public class RotatePlanet : MonoBehaviour {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (!GameManager.instance.inMenu)
+        if (!GameManager.instance.enableCameraMovement)
         {
             GameManager.instance.onPlanet = true;
 

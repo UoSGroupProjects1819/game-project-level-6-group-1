@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(GameManager))]
@@ -9,6 +10,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject sidebarUI;
     [SerializeField] private GameObject sortingUI;
+    [SerializeField] private GameObject miniSidebar;
 
     [SerializeField] private Canvas gameCanvas;
 
@@ -35,12 +37,29 @@ public class UIManager : MonoBehaviour {
 
     public void ToggleInventoryUI()
     {
-        GameManager.instance.inMenu = !GameManager.instance.inMenu;
+        GameManager.instance.enableCameraMovement = !GameManager.instance.enableCameraMovement;
         inventoryUI.SetActive(!inventoryUI.activeSelf);
         sidebarUI.SetActive(!inventoryUI.activeSelf);
     }
-    
+
+    public void ToggleSidebarUI()
+    {
+        sidebarUI.SetActive(!sidebarUI.activeSelf);
+        miniSidebar.SetActive(!miniSidebar.activeSelf);
+        //StartCoroutine(ToggleSidebarCR(2.0f));
+    }
+
     /* CONTROLLING THE UI */
+
+    //public IEnumerator ToggleSidebarCR(float delay)
+    //{
+    //    if (!sidebarUI.activeSelf || inventoryUI.activeSelf || sortingUI.activeSelf)
+    //        yield break;
+
+    //    yield return new WaitForSeconds(delay);
+
+    //    ToggleSidebarUI();
+    //}
 
     public void ShowCreationMenu()
     {
@@ -53,7 +72,7 @@ public class UIManager : MonoBehaviour {
 
     public void GameUI()
     {
-        sidebarUI.SetActive(true);
+        miniSidebar.SetActive(true);
     }
 
 }

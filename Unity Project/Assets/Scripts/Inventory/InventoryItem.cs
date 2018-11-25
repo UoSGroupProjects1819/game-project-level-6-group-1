@@ -38,9 +38,4 @@ public class InventoryItem : ScriptableObject {
 
         Debug.Log("Using: " + name);
     }
-
-    public float GetProbability
-    {
-        get { return probability; }
-    }
 }

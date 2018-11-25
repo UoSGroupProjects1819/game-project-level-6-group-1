@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class SortingObject : MonoBehaviour {
+public class SortingObject : MonoBehaviour, IDragHandler {
 
     [HideInInspector] public SortingItem scrObject;
     [HideInInspector] public int itemType = 0;
@@ -35,19 +36,33 @@ public class SortingObject : MonoBehaviour {
     private void Update()
     {
         objectCollider.size = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y);
-    }
+    } 
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
         if (Energy.instance.hasEnergy)
         {
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-            Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
-            objPos.z = 0;
+            Vector3 mousePos = eventData.position;
+            mousePos.z = 0;
 
-            transform.position = objPos;
-        } else { Debug.Log("No energy.");  return; }
+            transform.position = mousePos;
+        } else { Debug.Log("No energy!"); return; }
     }
+
+    //private void OnMouseDrag()
+    //{
+    //    if (Energy.instance.hasEnergy)
+    //    {
+    //        //Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+    //        //Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
+    //        //objPos.z = 0;
+
+    //        Vector3 mousePos = Input.mousePosition;
+    //        mousePos.z = 0.0f;
+
+    //        transform.position = mousePos;
+    //    } else { Debug.Log("No energy.");  return; }
+    //}
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
