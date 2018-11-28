@@ -248,7 +248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &39639114
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1937,8 +1937,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1992905916}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &375136158
 GameObject:
@@ -1951,8 +1951,6 @@ GameObject:
   - component: {fileID: 375136161}
   - component: {fileID: 375136162}
   - component: {fileID: 375136163}
-  - component: {fileID: 375136165}
-  - component: {fileID: 375136166}
   m_Layer: 0
   m_Name: _SCRIPTS
   m_TagString: Untagged
@@ -2017,48 +2015,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetNameInput: {fileID: 0}
---- !u!114 &375136165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 375136158}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65cd9f3028d04934e9c36b621c7589d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillImage: {fileID: 354684481}
-  maxEnergy: 5
-  countTime: 5
-  currentEnergy: 0
-  infiniteEnergy: 1
-  hasEnergy: 0
---- !u!114 &375136166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 375136158}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8e4979126757e646b570fec6838299c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vegetableRewards:
-  - {fileID: 11400000, guid: a8a6630418baf3a46b80750befd5f569, type: 2}
-  - {fileID: 11400000, guid: 5d3133f647f4b2b4bb3ac749e4298ee3, type: 2}
-  - {fileID: 11400000, guid: 897f9df7c2dd2b84fa7bda61b30bc373, type: 2}
-  fruitRewards:
-  - {fileID: 11400000, guid: b303008d308f6a540bfecbfeb934d0b3, type: 2}
-  - {fileID: 11400000, guid: ad346179aa3d49042bd3869fe7c48605, type: 2}
-  sortingObjects:
-  - {fileID: 11400000, guid: 72d6543ac823af34ea02910e35e6c421, type: 2}
-  - {fileID: 11400000, guid: 3fb53f9f083930945a897e1bc3f11dc5, type: 2}
-  sortingObjectPrefab: {fileID: 1137087272211926, guid: f944fbca7f8edf34088977c66e738b40,
-    type: 2}
-  itemsParent: {fileID: 958256710}
-  itemsSortedCorrectly: 0
 --- !u!224 &425292142 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224533527465124354, guid: af5528ca6e4d8984f87e771eef27c322,
@@ -3601,10 +3557,10 @@ RectTransform:
   m_Father: {fileID: 429444508}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -550}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967821406
 MonoBehaviour:
@@ -6022,10 +5978,10 @@ RectTransform:
   m_Father: {fileID: 429444508}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -350}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1596218433
 MonoBehaviour:
@@ -6582,10 +6538,10 @@ RectTransform:
   m_Father: {fileID: 429444508}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750571617
 MonoBehaviour:
@@ -6988,7 +6944,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1992905916}
-  - component: {fileID: 1992905918}
   - component: {fileID: 1992905917}
   - component: {fileID: 1992905920}
   - component: {fileID: 1992905919}
@@ -7012,7 +6967,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 586726166}
-  - {fileID: 361627377}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7032,27 +6986,6 @@ MonoBehaviour:
   sortingUI: {fileID: 1191109019}
   miniSidebar: {fileID: 1508100283}
   gameCanvas: {fileID: 586726169}
---- !u!114 &1992905918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1992905915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7334235bcefabf04087ca3b16315516b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skipMenu: 0
-  enableSorting: 0
-  enableCameraMovement: 0
-  onPlanet: 0
-  secondsPassed: 0
-  planetName: 
-  itemToPlace: {fileID: 0}
-  itemHolding: {fileID: 0}
-  playerPlanet: {fileID: 0}
-  currentState: 0
 --- !u!114 &1992905919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7074,7 +7007,7 @@ MonoBehaviour:
   sortingObjects:
   - {fileID: 11400000, guid: 72d6543ac823af34ea02910e35e6c421, type: 2}
   - {fileID: 11400000, guid: 3fb53f9f083930945a897e1bc3f11dc5, type: 2}
-  sortingObjectPrefab: {fileID: 1137087272211926, guid: f944fbca7f8edf34088977c66e738b40,
+  sortingObjectPrefab: {fileID: 1137087272211926, guid: c6fd16ded5f772141bc46b65cc29663a,
     type: 2}
   itemsParent: {fileID: 958256710}
   itemsSortedCorrectly: 0

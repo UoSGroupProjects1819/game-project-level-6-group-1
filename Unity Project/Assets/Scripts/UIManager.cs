@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(GameManager))]
 public class UIManager : MonoBehaviour {
 
     public static UIManager instance = null;
