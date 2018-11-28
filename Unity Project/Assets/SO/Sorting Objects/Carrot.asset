@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833f14d8a0f85c94291172e07d784c11, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: 
-  objSprite: {fileID: 21300000, guid: bb4ee8087149aa94b83308e7601efaad, type: 3}
+  objSprite: {fileID: 21300000, guid: 6248218ebc045a047bae563d9d58822c, type: 3}
   energyConsume: 1
   itemType: 1

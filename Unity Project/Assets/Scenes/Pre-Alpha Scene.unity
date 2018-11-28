@@ -7007,6 +7007,10 @@ MonoBehaviour:
   sortingObjects:
   - {fileID: 11400000, guid: 72d6543ac823af34ea02910e35e6c421, type: 2}
   - {fileID: 11400000, guid: 3fb53f9f083930945a897e1bc3f11dc5, type: 2}
+  - {fileID: 11400000, guid: 4163544eac4d5f944b392b5a3ea5a528, type: 2}
+  - {fileID: 11400000, guid: 2cb4d20abede7e04b9b12b7072d936e2, type: 2}
+  - {fileID: 11400000, guid: 231429a5bbf8799419fa81f41e93b089, type: 2}
+  - {fileID: 11400000, guid: 5de7ce4ef2e68e04bb7ee47d197723c5, type: 2}
   sortingObjectPrefab: {fileID: 1137087272211926, guid: c6fd16ded5f772141bc46b65cc29663a,
     type: 2}
   itemsParent: {fileID: 958256710}
@@ -7036,10 +7040,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 354684481}
-  maxEnergy: 5
+  maxEnergy: 50
   countTime: 5
   currentEnergy: 0
-  infiniteEnergy: 1
+  infiniteEnergy: 0
   hasEnergy: 0
 --- !u!114 &1992905922
 MonoBehaviour:

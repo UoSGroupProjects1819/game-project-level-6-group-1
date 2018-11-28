@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833f14d8a0f85c94291172e07d784c11, type: 3}
   m_Name: Parsnip
   m_EditorClassIdentifier: 
-  objSprite: {fileID: 0}
+  objSprite: {fileID: 21300000, guid: c1c971d14fbb8fc4898aae48a291c894, type: 3}
   energyConsume: 0
-  itemType: 0
+  itemType: 1
