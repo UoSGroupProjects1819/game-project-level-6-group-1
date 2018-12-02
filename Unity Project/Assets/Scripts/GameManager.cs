@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
         planetCreation = gameObject.GetComponent<PlanetCreation>();
         timeController = gameObject.GetComponent<TimeController>();
 
-        if (skipMenu)
-            StartGame();
+        //if (skipMenu)
+        //    StartGame();
 	}
 
     private void Update()
@@ -88,52 +88,47 @@ public class GameManager : MonoBehaviour
 
     #region FUNCTIONS USED TO CONTROL THE GAME
 
-    public void PlaceItem()
-    {
+    //public void LoadGame()
+    //{
+    //    Debug.Log("Load game");
 
-    }
+    //    // Before starting the planet creation menu, see if a existing game save exists.
+    //    if (PlayerPrefs.HasKey("PlanetName"))
+    //    {
+    //        // There is a planet name saved in the PlayerPrefs, we assume that a save exists.
+    //        planetName = PlayerPrefs.GetString("PlanetName");
+    //        Debug.Log("Game found, loading game!");
+    //        StartGame();
+    //    }
+    //    else
+    //    {
+    //        // No planet has been created, show the creation menu.
+    //        Debug.Log("No previous game found, create new planet.");
+    //        PlanetCreationMenu();
+    //    }
 
-    public void LoadGame()
-    {
-        Debug.Log("Load game");
+    //}
 
-        // Before starting the planet creation menu, see if a existing game save exists.
-        if (PlayerPrefs.HasKey("PlanetName"))
-        {
-            // There is a planet name saved in the PlayerPrefs, we assume that a save exists.
-            planetName = PlayerPrefs.GetString("PlanetName");
-            Debug.Log("Game found, loading game!");
-            StartGame();
-        }
-        else
-        {
-            // No planet has been created, show the creation menu.
-            Debug.Log("No previous game found, create new planet.");
-            PlanetCreationMenu();
-        }
+    //public void StartGame()
+    //{
+    //    Debug.Log("Start game!");
+    //    UIManager.instance.GameUI();
+    //    enableCameraMovement = false;
+    //}
 
-    }
-
-    public void StartGame()
-    {
-        Debug.Log("Start game!");
-        UIManager.instance.GameUI();
-        enableCameraMovement = false;
-    }
-
-    private void PlanetCreationMenu()
-    {
-        planetCreation.ShowCreationMenu();
+    //private void PlanetCreationMenu()
+    //{
+    //    planetCreation.ShowCreationMenu();
         
-    }
+    //}
 
     /* TEMP FUNCTIONS */
 
-    private void SaveGame()
-    {
-        PlayerPrefs.SetString("PlanetName", planetName);
-        timeController.SaveTime();
-    }
+    //private void SaveGame()
+    //{
+    //    PlayerPrefs.SetString("PlanetName", planetName);
+    //    timeController.SaveTime();
+    //}
 
     #endregion
 }

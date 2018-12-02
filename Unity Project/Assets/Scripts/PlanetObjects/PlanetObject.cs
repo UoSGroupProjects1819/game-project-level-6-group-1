@@ -16,6 +16,8 @@ public class PlanetObject : MonoBehaviour {
 
     public InventoryItem scrObject;
 
+    private JournalItem journalReward;
+
     private SpriteRenderer sprRenderer;
     private Sprite growingSprite;
     private Sprite finishedSprite;
@@ -43,6 +45,12 @@ public class PlanetObject : MonoBehaviour {
         sprRenderer = GetComponent<SpriteRenderer>();
         timerParent = timerText.transform.parent.gameObject;
         playerPlanet = GameManager.instance.playerPlanet;
+
+        if (scrObject.journalEntry != null)
+        {
+            journalReward = scrObject.journalEntry;
+            Journal.instance.Add(scrObject);
+        }
 
         transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 

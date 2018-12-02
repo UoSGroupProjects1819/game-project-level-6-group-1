@@ -1,52 +1,38 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
-{
+public class JournalSlot : MonoBehaviour {
 
     public Image icon;
-    public Button removeButton;
 
     InventoryItem item;
 
-    /// <summary>
-    /// Add a new item to the inventory list.
-    /// </summary>
     public void AddItem(InventoryItem newItem)
     {
         item = newItem;
         icon.sprite = item.itemIcon;
         icon.enabled = true;
-
-        removeButton.interactable = true;
     }
 
-    /// <summary>
-    /// Remove an item from the inventory list.
-    /// </summary>
     public void ClearSlot()
     {
         item = null;
         icon.sprite = null;
         icon.enabled = false;
-
-        removeButton.interactable = false;
     }
-
-    #region UI BUTTON FUNCTIONS
 
     public void OnRemoveButton()
     {
-        Inventory.instance.Remove(item);
+
     }
 
     public void OnUseButton()
     {
         if (item != null)
         {
-            item.UseInventory();
+            item.UseJournal();
         }
     }
-
-    #endregion
 }

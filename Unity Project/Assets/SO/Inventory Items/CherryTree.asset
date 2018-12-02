@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Cherry Tree
   itemIcon: {fileID: 21300004, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
+  journalEntry: {fileID: 11400000, guid: c8bf7c16204e0384bb98e23a5731027f, type: 2}
   spawnObject: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa,
     type: 2}
   objectSprites:

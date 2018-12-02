@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Tropical Tree
   itemIcon: {fileID: 21300036, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
+  journalEntry: {fileID: 11400000, guid: edb10f80ea633ce49b3e5b55e2dc9b67, type: 2}
   spawnObject: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa,
     type: 2}
   objectSprites:
@@ -20,4 +21,4 @@ MonoBehaviour:
   - {fileID: 21300036, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   growthTime: 420
   wateringInterval: 20
-  probability: 65
+  probability: 100

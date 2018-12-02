@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Planet Item", menuName = "Items/Planet Item")]
+[CreateAssetMenu(fileName = "New Planet Item", menuName = "Items/Inventory Item")]
 public class InventoryItem : ScriptableObject {
     /* MAKE THE VARIABLES PRIVATE AT SOME POINT && USE GETTERES */
 
@@ -10,6 +10,8 @@ public class InventoryItem : ScriptableObject {
 
     [Tooltip("This is the icon of the object, it will be displayed in the inventory when players pick it up.")]
     public Sprite itemIcon = null;
+
+    public JournalItem journalEntry;
 
     [Tooltip("This is the object that will be spawned when players select it.")]
     [SerializeField] private GameObject spawnObject;
@@ -27,7 +29,7 @@ public class InventoryItem : ScriptableObject {
     public float probability;
 
     // Called when pressed in the inventory.
-    public virtual void UseItem()
+    public virtual void UseInventory()
     {
         // Use the item
         UIManager.instance.ToggleInventoryUI();
@@ -37,5 +39,10 @@ public class InventoryItem : ScriptableObject {
         GameManager.instance.itemHolding = this;
 
         Debug.Log("Using: " + name);
+    }
+
+    public virtual void UseJournal()
+    {
+        Debug.Log("Display item, and stats.");
     }
 }

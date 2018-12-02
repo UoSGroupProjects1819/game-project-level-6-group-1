@@ -18,31 +18,31 @@ public class PlanetCreation : MonoBehaviour
         else { /* Debug.LogError("Cannot find planet craetion menu!"); */ }
     }
 
-    public void ShowCreationMenu()
-    {
-        UIManager.instance.ShowCreationMenu();
-        isActive = true;
-    }
+    //public void ShowCreationMenu()
+    //{
+    //    UIManager.instance.ShowCreationMenu();
+    //    isActive = true;
+    //}
 
     private void Update()
     {
-        if (isActive)
-        {
+        //if (isActive)
+        //{
 
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                _tempPlanetName = planetNameInput.text;
+        //    if (Input.GetKeyDown(KeyCode.Return))
+        //    {
+        //        _tempPlanetName = planetNameInput.text;
 
-                if (_tempPlanetName != "" || _tempPlanetName != " ")
-                {
-                    GameManager.instance.planetName = _tempPlanetName;
-                    GameManager.instance.StartGame();
-                    StartCoroutine(MenuDisappearDelay());
-                    isActive = false;
-                }
-                else { Debug.LogError("Invalid planet name!"); }
-            }
-        }
+        //        if (_tempPlanetName != "" || _tempPlanetName != " ")
+        //        {
+        //            GameManager.instance.planetName = _tempPlanetName;
+        //            GameManager.instance.StartGame();
+        //            StartCoroutine(MenuDisappearDelay());
+        //            isActive = false;
+        //        }
+        //        else { Debug.LogError("Invalid planet name!"); }
+        //    }
+        //}
     }
 
     private IEnumerator MenuDisappearDelay()
