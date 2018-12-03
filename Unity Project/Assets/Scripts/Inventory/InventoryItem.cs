@@ -43,6 +43,7 @@ public class InventoryItem : ScriptableObject {
 
     public virtual void UseJournal()
     {
+        UIManager.instance.DisplayItem(this);
         Debug.Log("Display item, and stats.");
     }
 }

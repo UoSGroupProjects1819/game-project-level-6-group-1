@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class JournalSlot : MonoBehaviour {
 
+    public Sprite unkIcon;
     public Image icon;
 
     InventoryItem item;
@@ -19,8 +20,8 @@ public class JournalSlot : MonoBehaviour {
     public void ClearSlot()
     {
         item = null;
-        icon.sprite = null;
-        icon.enabled = false;
+        //icon.sprite = null;
+        //icon.enabled = false;
     }
 
     public void OnRemoveButton()

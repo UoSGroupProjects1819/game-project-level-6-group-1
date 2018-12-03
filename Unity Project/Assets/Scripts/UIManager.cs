@@ -3,9 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    [Header("Item Details Page")]
+    [SerializeField] private TMPro.TMP_Text itemName;
+    [SerializeField] private TMPro.TMP_Text growthTime;
+    [SerializeField] private Image itemIcon;
 
-    public static UIManager instance = null;
 
+    [Header("UI Elements")]
     [SerializeField] private GameObject UI_Sidebar;
     [SerializeField] private GameObject UI_MSidebar;
     [SerializeField] private GameObject UI_Inventory;
@@ -19,6 +23,8 @@ public class UIManager : MonoBehaviour {
     [Header("Debug")]
     [SerializeField] private string planetName = "Foobar";
 
+    #region Singleton
+    public static UIManager instance = null;
     private void Awake()
     {
         if (instance == null)
@@ -26,13 +32,7 @@ public class UIManager : MonoBehaviour {
         else if (instance != null)
             Destroy(gameObject);
     }
-
-    /* FUNCTIONS FOR THE BUTTONS */
-
-    //public void _StartGame()
-    //{
-    //    GameManager.instance.LoadGame();
-    //}
+    #endregion
 
     private void Start()
     {
@@ -64,7 +64,6 @@ public class UIManager : MonoBehaviour {
     {
         UI_Sidebar.SetActive(!UI_Sidebar.activeSelf);
         UI_MSidebar.SetActive(!UI_MSidebar.activeSelf);
-        //StartCoroutine(ToggleSidebarCR(2.0f));
     }
 
     public void ToggleJournalUI()
@@ -73,26 +72,12 @@ public class UIManager : MonoBehaviour {
         UI_Journal.SetActive(!UI_Journal.activeSelf);
     }
 
-    /* CONTROLLING THE UI */
-
-    //public IEnumerator ToggleSidebarCR(float delay)
-    //{
-    //    if (!sidebarUI.activeSelf || inventoryUI.activeSelf || sortingUI.activeSelf)
-    //        yield break;
-
-    //    yield return new WaitForSeconds(delay);
-
-    //    ToggleSidebarUI();
-    //}
-
-    //public void ShowCreationMenu()
-    //{
-    //    GameObject[] _MainMenu = GameObject.FindGameObjectsWithTag("MainMenu");
-    //    foreach (GameObject _go in _MainMenu)
-    //    {
-    //        _go.SetActive(false);
-    //    }
-    //}
+    public void DisplayItem(InventoryItem item)
+    {
+        itemName.text = item.name;
+        itemIcon.sprite = item.itemIcon;
+        growthTime.text = item.growthTime.ToString();
+    }
 
     public void GameUI()
     {
