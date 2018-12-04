@@ -15,6 +15,7 @@ public class Sorting : MonoBehaviour
     [HideInInspector] public int itemsSortedCorrectly;
 
     private GameObject spawnedItem;
+    private InventoryItem reward;
 
     #region Singleton
     public static Sorting instance;
@@ -36,12 +37,15 @@ public class Sorting : MonoBehaviour
     {
         if (itemsSortedCorrectly == 1)
         {
-            bool playerRewarded = Inventory.instance.Add(RewardPlayer());
+            reward = RewardPlayer();
+            bool playerRewarded = Inventory.instance.Add(reward);
 
-            if (!playerRewarded)
+            if (!playerRewarded || reward == null)
                 Debug.Log("Could not reward player!");
 
+            UIManager.instance.RewardNotif(reward);
             itemsSortedCorrectly = 0;
+            reward = null;
         }
     }
 

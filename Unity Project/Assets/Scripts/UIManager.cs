@@ -16,12 +16,15 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject UI_Sorting;
     [SerializeField] private GameObject UI_Journal;
     [SerializeField] private GameObject UI_PlanetBanner;
+    [SerializeField] private GameObject UI_RewardNotification;
     [SerializeField] private TMPro.TMP_Text[] planetTexts;
 
     [SerializeField] private Canvas gameCanvas;
 
     [Header("Debug")]
     [SerializeField] private string planetName = "Foobar";
+
+    private RewardNotification rewardNotif;
 
     #region Singleton
     public static UIManager instance = null;
@@ -41,10 +44,9 @@ public class UIManager : MonoBehaviour {
             _text.text = planetName;
         }
 
+        rewardNotif = UI_RewardNotification.GetComponent<RewardNotification>();
 
-        UI_Sidebar.SetActive(true);
-
-        StartCoroutine(FadeOutBanner(2.0f, 0.7f));
+        StartCoroutine(BeginGameUI());
     }
 
     public void ToggleSortingUI()
@@ -72,18 +74,34 @@ public class UIManager : MonoBehaviour {
         UI_Journal.SetActive(!UI_Journal.activeSelf);
     }
 
+    public void RewardNotif(InventoryItem item)
+    {
+        rewardNotif.transform.gameObject.SetActive(true);
+        rewardNotif.DisplayNotification(item);
+    }
+
+    #region Journal Functions
     public void DisplayItem(InventoryItem item)
     {
         itemName.text = item.name;
         itemIcon.sprite = item.itemIcon;
         growthTime.text = item.growthTime.ToString();
     }
+    #endregion
 
     public void GameUI()
     {
         UI_MSidebar.SetActive(true);
     }
 
+    IEnumerator BeginGameUI()
+    {
+        StartCoroutine(FadeOutBanner(2.0f, 0.7f));
+
+        yield return new WaitForSeconds(2.5f);
+
+        UI_Sidebar.SetActive(true);
+    }
 
     IEnumerator FadeOutBanner(float bannerDelay, float fadeTime)
     {
