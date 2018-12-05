@@ -1181,7 +1181,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cb4d20abede7e04b9b12b7072d936e2, type: 2}
   - {fileID: 11400000, guid: 231429a5bbf8799419fa81f41e93b089, type: 2}
   - {fileID: 11400000, guid: 5de7ce4ef2e68e04bb7ee47d197723c5, type: 2}
-  sortingObjectPrefab: {fileID: 1137087272211926, guid: f944fbca7f8edf34088977c66e738b40,
+  sortingObjectPrefab: {fileID: 1137087272211926, guid: c6fd16ded5f772141bc46b65cc29663a,
     type: 2}
   itemsParent: {fileID: 958256710}
   itemsSortedCorrectly: 0
