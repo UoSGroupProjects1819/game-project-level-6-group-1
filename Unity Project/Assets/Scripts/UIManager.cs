@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour {
 
     private void Start()
     {
+        planetName = GameManager.instance.planetName;
+
         foreach (TMPro.TMP_Text _text in planetTexts)
         {
             _text.text = planetName;

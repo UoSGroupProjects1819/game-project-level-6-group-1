@@ -39,7 +39,9 @@ public class GameManager : MonoBehaviour
     private void Start ()
     {
         // DELETE ALL PLAYERPREF KEYS. || DEBUG ONLY, DELETE LATER.
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
+
+        planetName = PlayerPrefs.GetString("PlanetName");
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
         planetCreation = gameObject.GetComponent<PlanetCreation>();
@@ -119,7 +121,7 @@ public class GameManager : MonoBehaviour
     //private void PlanetCreationMenu()
     //{
     //    planetCreation.ShowCreationMenu();
-        
+
     //}
 
     /* TEMP FUNCTIONS */
@@ -131,4 +133,13 @@ public class GameManager : MonoBehaviour
     //}
 
     #endregion
+
+    private void OnApplicationQuit()
+    {
+        // Delete player prefs when done.
+        // Should probably make a note, to remove this when shipping.
+        if (Debug.isDebugBuild)
+            PlayerPrefs.DeleteAll();
+        
+    }
 }
