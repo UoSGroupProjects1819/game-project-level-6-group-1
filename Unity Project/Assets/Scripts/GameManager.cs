@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
     [Tooltip("Set this to true, in order to skip the menu and go straight into the gameplay.")]
     public bool skipMenu= false;
     public bool enableSorting;
+    public string planetName;
+
+    [Header("DEBUG")]
+    public string gameVer = "GAME_VER";
 
     [HideInInspector] public bool enableCameraMovement = false;
     [HideInInspector] public bool onPlanet = false;
 
     [HideInInspector] public double secondsPassed;
-    [HideInInspector] public string planetName;
     [HideInInspector] public GameObject itemToPlace;
     [HideInInspector] public InventoryItem itemHolding;
     [HideInInspector] public GameObject playerPlanet;
@@ -38,10 +41,16 @@ public class GameManager : MonoBehaviour
 
     private void Start ()
     {
-        // DELETE ALL PLAYERPREF KEYS. || DEBUG ONLY, DELETE LATER.
-        //PlayerPrefs.DeleteAll();
+        if (gameVer == "GAME_VER")
+        {
+            Debug.LogError("GAME VERSION NOT SET.");
+            return;
+        }
 
         planetName = PlayerPrefs.GetString("PlanetName");
+
+        if (planetName == "")
+            planetName = "Eos";
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
         planetCreation = gameObject.GetComponent<PlanetCreation>();

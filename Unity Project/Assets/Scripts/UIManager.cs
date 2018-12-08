@@ -19,12 +19,20 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject UI_RewardNotification;
     [SerializeField] private TMPro.TMP_Text[] planetTexts;
 
+    [Header("Journal Pages")]
+    [SerializeField] private GameObject StatsPage;
+    [SerializeField] private GameObject ItemPage;
+
     [SerializeField] private Canvas gameCanvas;
 
     [Header("Debug")]
     [SerializeField] private string planetName = "Foobar";
+    [SerializeField] private TMPro.TMP_Text[] statsTexts;
+    [SerializeField] private TMPro.TMP_Text gameVer;
 
     private RewardNotification rewardNotif;
+
+    GameManager GM;
 
     #region Singleton
     public static UIManager instance = null;
@@ -39,12 +47,19 @@ public class UIManager : MonoBehaviour {
 
     private void Start()
     {
-        planetName = GameManager.instance.planetName;
+        GM = GameManager.instance;
+
+        gameVer.text = GM.gameVer;
+        planetName = GM.planetName;
 
         foreach (TMPro.TMP_Text _text in planetTexts)
         {
             _text.text = planetName;
         }
+
+        statsTexts[0].text = System.DateTime.Now.ToShortDateString();
+        statsTexts[1].text = "Not yet functional.";
+        statsTexts[2].text = "Not yet functional.";
 
         rewardNotif = UI_RewardNotification.GetComponent<RewardNotification>();
 
@@ -59,7 +74,7 @@ public class UIManager : MonoBehaviour {
 
     public void ToggleInventoryUI()
     {
-        GameManager.instance.enableCameraMovement = !GameManager.instance.enableCameraMovement;
+        GM.enableCameraMovement = !GM.enableCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
         UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }
@@ -85,9 +100,21 @@ public class UIManager : MonoBehaviour {
     #region Journal Functions
     public void DisplayItem(InventoryItem item)
     {
+        if (!ItemPage.activeSelf)
+        {
+            ItemPage.SetActive(!ItemPage.activeSelf);
+            StatsPage.SetActive(!StatsPage.activeSelf);
+        }
+
         itemName.text = item.name;
         itemIcon.sprite = item.itemIcon;
         growthTime.text = item.growthTime.ToString();
+    }
+
+    public void ShowStatsPage()
+    {
+        ItemPage.SetActive(false);
+        StatsPage.SetActive(true);
     }
     #endregion
 
