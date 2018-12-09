@@ -6,17 +6,14 @@ public class GameManager : MonoBehaviour
 {
     [Header("DEBUG")]
     [Tooltip("Current version of the game.")]
-    public string gameVer = "GAME_VER";
+    [SerializeField] private string buildVersion;
+    [SerializeField] private string planetName;
 
-    [HideInInspector] public bool enableCameraMovement = false;
-    [HideInInspector] public bool onPlanet = false;
-
-    [HideInInspector] public string planetName;
-
-    [HideInInspector] public double secondsPassed;
-    [HideInInspector] public GameObject itemToPlace;
     [HideInInspector] public InventoryItem itemHolding;
-    [HideInInspector] public GameObject playerPlanet;
+    [HideInInspector] public GameObject treePrefab;
+    [HideInInspector] public GameObject planetRef;
+
+    [HideInInspector] public bool allowCameraMovement = false;
 
     #region Singleton
     public static GameManager instance = null;
@@ -34,18 +31,11 @@ public class GameManager : MonoBehaviour
 
     private void Start ()
     {
-        if (gameVer == "GAME_VER")
-        {
-            Debug.LogError("GAME VERSION NOT SET.");
-            return;
-        }
-
+        planetRef = GameObject.FindGameObjectWithTag("Player");
         planetName = PlayerPrefs.GetString("PlanetName");
 
         if (planetName == "")
             planetName = "Eos";
-
-        playerPlanet = GameObject.FindGameObjectWithTag("Player");
 	}
 
     private void Update()
@@ -53,15 +43,15 @@ public class GameManager : MonoBehaviour
         // THIS SHOULD BE IN ITS OWN THING
         if (currentState == GameState.PlaceItem)
         {
-            enableCameraMovement = true;
+            allowCameraMovement = true;
 
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 placePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 placePos.z = 0;
 
-                GameObject tempObject = Instantiate(itemToPlace, placePos, Quaternion.identity);
-                tempObject.transform.parent = playerPlanet.transform;
+                GameObject tempObject = Instantiate(treePrefab, placePos, Quaternion.identity);
+                tempObject.transform.parent = planetRef.transform;
 
                 tempObject.GetComponentInChildren<PlanetObject>().scrObject = itemHolding;
                 tempObject.name = itemHolding.name;
@@ -73,62 +63,15 @@ public class GameManager : MonoBehaviour
 
                 tempObject = null;
                 itemHolding = null;
-                itemToPlace = null;
-                enableCameraMovement = false;
+                treePrefab = null;
+                allowCameraMovement = false;
             }
         }
     }
 
-    //private void OnApplicationQuit()
-    //{
-    //    // When quitting the game, save the time to PlayerPrefs.
-    //    timeController.SaveTime();
-    //}
-
-    #region FUNCTIONS USED TO CONTROL THE GAME
-
-    //public void LoadGame()
-    //{
-    //    Debug.Log("Load game");
-
-    //    // Before starting the planet creation menu, see if a existing game save exists.
-    //    if (PlayerPrefs.HasKey("PlanetName"))
-    //    {
-    //        // There is a planet name saved in the PlayerPrefs, we assume that a save exists.
-    //        planetName = PlayerPrefs.GetString("PlanetName");
-    //        Debug.Log("Game found, loading game!");
-    //        StartGame();
-    //    }
-    //    else
-    //    {
-    //        // No planet has been created, show the creation menu.
-    //        Debug.Log("No previous game found, create new planet.");
-    //        PlanetCreationMenu();
-    //    }
-
-    //}
-
-    //public void StartGame()
-    //{
-    //    Debug.Log("Start game!");
-    //    UIManager.instance.GameUI();
-    //    enableCameraMovement = false;
-    //}
-
-    //private void PlanetCreationMenu()
-    //{
-    //    planetCreation.ShowCreationMenu();
-
-    //}
-
-    /* TEMP FUNCTIONS */
-
-    //private void SaveGame()
-    //{
-    //    PlayerPrefs.SetString("PlanetName", planetName);
-    //    timeController.SaveTime();
-    //}
-
+    #region Getters & Setters
+    public string GetPlanetName { get { return planetName; } }
+    public string GetBuildVersion { get { return buildVersion; } }
     #endregion
 
     private void OnApplicationQuit()

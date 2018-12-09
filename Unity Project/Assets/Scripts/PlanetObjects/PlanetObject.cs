@@ -48,7 +48,7 @@ public class PlanetObject : MonoBehaviour {
         // Set the references when object is instantiated.
         sprRenderer = GetComponent<SpriteRenderer>();
         timerParent = timerText.transform.parent.gameObject;
-        playerPlanet = GameManager.instance.playerPlanet;
+        playerPlanet = GameManager.instance.planetRef;
 
         //if (scrObject.journalEntry != null)
         //{

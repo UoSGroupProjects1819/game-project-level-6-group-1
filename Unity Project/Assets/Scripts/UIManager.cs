@@ -54,8 +54,11 @@ public class UIManager : MonoBehaviour {
         newItem     = UI_NewItem.GetComponent<RewardNotification>();
         newReward   = UI_NewReward.GetComponent<RewardNotification>();
 
-        gameVer.text = GM.gameVer;
-        planetName = GM.planetName;
+        gameVer.text = GM.GetBuildVersion;
+        planetName = GM.GetPlanetName;
+
+        if (planetName == "")
+            planetName = "Eos";
 
         foreach (TMPro.TMP_Text _text in planetTexts)
         {
@@ -80,7 +83,7 @@ public class UIManager : MonoBehaviour {
 
     public void _ToggleInventoryUI()
     {
-        GM.enableCameraMovement = !GM.enableCameraMovement;
+        GM.allowCameraMovement = !GM.allowCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
         UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }

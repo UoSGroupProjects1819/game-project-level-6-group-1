@@ -35,7 +35,7 @@ public class InventoryItem : ScriptableObject {
         UIManager.instance._ToggleInventoryUI();
         GameManager.instance.currentState = GameManager.GameState.PlaceItem;
 
-        GameManager.instance.itemToPlace = spawnObject;
+        GameManager.instance.treePrefab = spawnObject;
         GameManager.instance.itemHolding = this;
 
         Debug.Log("Using: " + name);
