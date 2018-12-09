@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-
     [Tooltip("Set this to true, in order to skip the menu and go straight into the gameplay.")]
     public bool skipMenu= false;
     public bool enableSorting;
@@ -23,7 +21,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GameObject playerPlanet;
 
     private TimeController timeController;
-    private PlanetCreation planetCreation;
 
     #region Singleton
     public static GameManager instance = null;
@@ -53,7 +50,6 @@ public class GameManager : MonoBehaviour
             planetName = "Eos";
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
-        planetCreation = gameObject.GetComponent<PlanetCreation>();
         timeController = gameObject.GetComponent<TimeController>();
 
         //if (skipMenu)
