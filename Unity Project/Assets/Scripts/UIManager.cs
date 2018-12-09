@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject UI_Sorting;
     [SerializeField] private GameObject UI_Journal;
     [SerializeField] private GameObject UI_PlanetBanner;
-    [SerializeField] private GameObject UI_RewardNotification;
+    [SerializeField] private GameObject UI_NewItem, UI_NewReward;
     [SerializeField] private TMPro.TMP_Text[] planetTexts;
 
     [Header("Journal Pages")]
@@ -31,8 +31,10 @@ public class UIManager : MonoBehaviour {
 
     private string planetName;
 
-    private RewardNotification _RewardNotification;
-    private GameManager _GameManager;
+    private RewardNotification newItem;
+    private RewardNotification newReward;
+
+    private GameManager GM;
 
     #region Singleton
     public static UIManager instance = null;
@@ -47,17 +49,20 @@ public class UIManager : MonoBehaviour {
 
     private void Start()
     {
-        _RewardNotification = UI_RewardNotification.GetComponent<RewardNotification>();
-        _GameManager = GameManager.instance;
+        GM = GameManager.instance;
 
-        gameVer.text = _GameManager.gameVer;
-        planetName = _GameManager.planetName;
+        newItem     = UI_NewItem.GetComponent<RewardNotification>();
+        newReward   = UI_NewReward.GetComponent<RewardNotification>();
+
+        gameVer.text = GM.gameVer;
+        planetName = GM.planetName;
 
         foreach (TMPro.TMP_Text _text in planetTexts)
         {
             _text.text = planetName;
         }
 
+        // Temporary
         statsTexts[0].text = System.DateTime.Now.ToShortDateString();
         statsTexts[1].text = "Not yet functional.";
         statsTexts[2].text = "Not yet functional.";
@@ -66,6 +71,7 @@ public class UIManager : MonoBehaviour {
         StartCoroutine(BeginGameUI());
     }
 
+    #region Button Functions
     public void _ToggleSortingUI()
     {
         UI_Sorting.SetActive(!UI_Sorting.activeSelf);
@@ -74,7 +80,7 @@ public class UIManager : MonoBehaviour {
 
     public void _ToggleInventoryUI()
     {
-        _GameManager.enableCameraMovement = !_GameManager.enableCameraMovement;
+        GM.enableCameraMovement = !GM.enableCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
         UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }
@@ -90,12 +96,21 @@ public class UIManager : MonoBehaviour {
         UI_Sidebar.SetActive(!UI_Sidebar.activeSelf);
         UI_Journal.SetActive(!UI_Journal.activeSelf);
     }
+    #endregion
 
-    public void RewardNotif(InventoryItem item)
+    #region Notifications
+    public void NewItemNotif(InventoryItem item)
     {
-        _RewardNotification.transform.gameObject.SetActive(true);
-        _RewardNotification.DisplayNotification(item);
+        UI_NewItem.SetActive(true);
+        newItem.DisplayNotification(item);
     }
+
+    public void NewRewardNotif(InventoryItem item)
+    {
+        UI_NewReward.SetActive(true);
+        newReward.DisplayNotification(item);
+    }
+    #endregion
 
     #region Journal Functions
     public void DisplayItem(InventoryItem item)
@@ -118,11 +133,11 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
-    [System.Obsolete("This function will be removed in future updates, avoid using it. Leftover after old UI.")]
-    public void GameUI()
-    {
-        UI_MSidebar.SetActive(true);
-    }
+    //[System.Obsolete("This function will be removed in future updates, avoid using it. Leftover after old UI.")]
+    //public void GameUI()
+    //{
+    //    UI_MSidebar.SetActive(true);
+    //}
 
     /* Organise the two below */
 
@@ -130,7 +145,7 @@ public class UIManager : MonoBehaviour {
     {
         StartCoroutine(FadeOutBanner(2.0f, 0.7f));
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(.2f);
 
         UI_Sidebar.SetActive(true);
     }

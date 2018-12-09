@@ -10,10 +10,14 @@ public class Journal : MonoBehaviour {
     public List<InventoryItem> journalItems = new List<InventoryItem>();
     [SerializeField] private int journalSlots = 20;
 
+    UIManager UI;
+
     #region Singleton
     public static Journal instance;
     private void Awake()
     {
+        UI = UIManager.instance;
+
         if (instance == null)
             instance = this;
         else if (instance != null)

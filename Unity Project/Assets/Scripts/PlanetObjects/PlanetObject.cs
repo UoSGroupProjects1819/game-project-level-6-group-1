@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlanetObject : MonoBehaviour {
@@ -10,6 +11,8 @@ public class PlanetObject : MonoBehaviour {
     [SerializeField] private GameObject energyStar;
     [Tooltip("This is the timer that displays how much longer the object has left to grow.")]
     [SerializeField] private TMPro.TMP_Text timerText;
+    [SerializeField] private Sprite moveItemSprite;
+    [SerializeField] private GameObject moveButton, acceptButton;
 
     [Header("Debug Stuff")]
     [SerializeField] private bool enableWatering = false;
@@ -33,6 +36,7 @@ public class PlanetObject : MonoBehaviour {
 
     private bool finishedGrowing;
     private bool isWatered;
+    [SerializeField] private bool moveItem;
 
     private GameObject playerPlanet;
     private GameObject timerParent;
@@ -46,11 +50,11 @@ public class PlanetObject : MonoBehaviour {
         timerParent = timerText.transform.parent.gameObject;
         playerPlanet = GameManager.instance.playerPlanet;
 
-        if (scrObject.journalEntry != null)
-        {
-            journalReward = scrObject.journalEntry;
-            Journal.instance.Add(scrObject);
-        }
+        //if (scrObject.journalEntry != null)
+        //{
+        //    journalReward = scrObject.journalEntry;
+        //    Journal.instance.Add(scrObject);
+        //}
 
         transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 
@@ -118,6 +122,19 @@ public class PlanetObject : MonoBehaviour {
         targetText.text = timeString;
     }
 
+    private bool CheckForWateredBool()
+    {
+        if (isWatered && enableWatering)
+        {
+            targetTime = Time.time + remainTime;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void OnMouseDown()
     {
         if (finishedGrowing)
@@ -130,19 +147,6 @@ public class PlanetObject : MonoBehaviour {
         {
             isWatered = true;
             currentWaterTimer = waterInterval;
-        }
-    }
-
-    private bool CheckForWateredBool()
-    {
-        if (isWatered && enableWatering)
-        {
-            targetTime = Time.time + remainTime;
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 

@@ -20,6 +20,8 @@ public class Sorting : MonoBehaviour
     private Energy energyInstance;
     private Inventory inventoryInstance;
 
+    UIManager UI;
+
     #region Singleton
     public static Sorting instance;
     private void Awake()
@@ -33,6 +35,7 @@ public class Sorting : MonoBehaviour
 
     private void Start()
     {
+        UI                  = UIManager.instance;
         inventoryInstance   = Inventory.instance;
         energyInstance      = Energy.instance;
 
@@ -49,7 +52,16 @@ public class Sorting : MonoBehaviour
             if (!playerRewarded || reward == null)
                 Debug.Log("Could not reward player!");
 
-            UIManager.instance.RewardNotif(reward);
+            if (Journal.instance.journalItems.Contains(reward))
+            {
+                UI.NewItemNotif(reward);
+            }
+            else
+            {
+                UI.NewRewardNotif(reward);
+                Journal.instance.Add(reward);
+            }
+
             itemsSortedCorrectly = 0;
             reward = null;
         }
@@ -92,7 +104,7 @@ public class Sorting : MonoBehaviour
         {
             if (randomPoint < itemArray[i].probability)
             {
-                Debug.Log("Player rewarded " + itemArray[i].name);
+                //Debug.Log("Player rewarded " + itemArray[i].name);
                 return itemArray[i];
             }
             else
@@ -101,7 +113,7 @@ public class Sorting : MonoBehaviour
             }
         }
 
-        Debug.Log("Reward not found, rewarding last item.");
+        //Debug.Log("Reward not found, rewarding last item.");
         return itemArray[itemArray.Length -1];
     }
 
