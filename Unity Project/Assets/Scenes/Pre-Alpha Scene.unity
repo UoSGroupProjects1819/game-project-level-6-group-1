@@ -364,6 +364,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cb4d20abede7e04b9b12b7072d936e2, type: 2}
   - {fileID: 11400000, guid: 231429a5bbf8799419fa81f41e93b089, type: 2}
   - {fileID: 11400000, guid: 5de7ce4ef2e68e04bb7ee47d197723c5, type: 2}
+  - {fileID: 11400000, guid: 60da2bfc451f6b743bad25c543c66d82, type: 2}
+  - {fileID: 11400000, guid: b94ab739703dae94cbf4e609d7bfea78, type: 2}
+  - {fileID: 11400000, guid: 5c3e1e05113090642bc3e8a9b9abf5fa, type: 2}
+  - {fileID: 11400000, guid: 1e97bcee3af47cb40842c32e90d5a4ea, type: 2}
+  - {fileID: 11400000, guid: 87dd0eaa0db116c42b56e86ab9a27ce6, type: 2}
+  - {fileID: 11400000, guid: a762bd29d6a573d429b05e070bacb1a8, type: 2}
+  - {fileID: 11400000, guid: 52f4598b3ebc5774b88546b096c268e5, type: 2}
   sortingObjectPrefab: {fileID: 1137087272211926, guid: c6fd16ded5f772141bc46b65cc29663a,
     type: 2}
   itemsParent: {fileID: 958256710}
