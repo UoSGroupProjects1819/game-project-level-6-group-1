@@ -32,7 +32,7 @@ public class InventoryItem : ScriptableObject {
     public virtual void UseInventory()
     {
         // Use the item
-        UIManager.instance.ToggleInventoryUI();
+        UIManager.instance._ToggleInventoryUI();
         GameManager.instance.currentState = GameManager.GameState.PlaceItem;
 
         GameManager.instance.itemToPlace = spawnObject;

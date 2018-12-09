@@ -3,17 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * ToDo:
+ *  - Separate the UI into its own UI script.
+ *  - Keep this to functionality only.
+ */
+
 public class Energy : MonoBehaviour
 {
+    [Header("Refill Settings")]
+    [Tooltip("Amount of time (in seconds), before the player receives free energy.")]
+    [SerializeField] private float refillTime;
+    [Tooltip("Amount of energy the players will receive when the timer runs out.")]
+    [SerializeField] private float refillAmnt;
+
+    [Header("System settings")]
+    [Tooltip("Image used to display the amount of energy. REMEMBER to set the image type to 'fill'.")]
     [SerializeField] private Image fillImage;
-    [SerializeField] private float maxEnergy;
-    [SerializeField] private float countTime;
-    [SerializeField] private float currentEnergy;
+    [Tooltip("When ticked, the energy will not be drained. Use for testing.")]
     [SerializeField] private bool infiniteEnergy;
+    [Tooltip("Maximum amount of energy players can have, this can be adjusted on the go.")]
+    [SerializeField] private float maxEnergy;
 
     [HideInInspector] public bool hasEnergy;
 
+    private float countTime = 5.0f;
+
+    private float timer;
     private float startEnergy;
+    private float currentEnergy;
     private float desiredEnergy;
 
     #region Singleton
@@ -31,7 +49,7 @@ public class Energy : MonoBehaviour
     {
         UpdateUI();
         SetEnergy(maxEnergy);
-        RemoveEnergy(1);
+        timer = refillTime;
     }
 
     /// <summary>
@@ -60,9 +78,24 @@ public class Energy : MonoBehaviour
 
     private void Update()
     {
-        if (infiniteEnergy)
+        // For testing purpose, only works on debug builds.
+        if (Debug.isDebugBuild && infiniteEnergy)
             desiredEnergy = maxEnergy;
 
+        #region Simple Energy Refill
+        if (timer >= 0.0f)
+        {
+            timer -= Time.deltaTime;
+        }
+        else if (timer <= 0.0f)
+        {
+            Debug.Log("Added " + refillAmnt + " energy, after " + refillTime + " seconds.");
+            AddEnergy(refillAmnt);
+            timer = refillTime;
+        }
+        #endregion
+
+        #region Energy system
         if (currentEnergy > 0)
             hasEnergy = true;
         else
@@ -88,13 +121,12 @@ public class Energy : MonoBehaviour
 
             UpdateUI();
         }
+        #endregion
     }
 
     private void UpdateUI()
     {
         float uiFill = currentEnergy / maxEnergy;
         fillImage.fillAmount = uiFill;
-
-        //numberText.text = currentEnergy.ToString("0");
     }
 }

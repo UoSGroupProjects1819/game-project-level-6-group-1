@@ -48,24 +48,4 @@ public class SortingObject : MonoBehaviour, IDragHandler {
             transform.position = mousePos;
         } else { Debug.Log("No energy!"); return; }
     }
-
-    //private void OnMouseDrag()
-    //{
-    //    if (Energy.instance.hasEnergy)
-    //    {
-    //        //Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
-    //        //Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
-    //        //objPos.z = 0;
-
-    //        Vector3 mousePos = Input.mousePosition;
-    //        mousePos.z = 0.0f;
-
-    //        transform.position = mousePos;
-    //    } else { Debug.Log("No energy.");  return; }
-    //}
-
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        // Prolly have the system take care of this rather than the item itself.
-    }
 }

@@ -8,6 +8,7 @@ public class RewardNotification : MonoBehaviour {
     [SerializeField] private Image NotificationIcon;
     [SerializeField] private TMPro.TMP_Text NotificationText;
 
+    private bool isShowing;
     private Animator anim;
 
     private void Start()
@@ -22,6 +23,11 @@ public class RewardNotification : MonoBehaviour {
     /// <param name="item"></param>
     public void DisplayNotification(InventoryItem item)
     {
+        if (isShowing)
+            return;
+
+        isShowing = true;
+
         NotificationText.text = item.name;
         NotificationIcon.sprite = item.itemIcon;
 
@@ -41,6 +47,9 @@ public class RewardNotification : MonoBehaviour {
         // Clean up after displaying the notification.
         NotificationIcon.sprite = null;
         NotificationText.text   = "";
+
+        isShowing = false;
+
         yield break;
     }
 }

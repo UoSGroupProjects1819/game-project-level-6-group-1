@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Tooltip("Set this to true, in order to skip the menu and go straight into the gameplay.")]
-    public bool skipMenu= false;
-    public bool enableSorting;
-    public string planetName;
-
     [Header("DEBUG")]
+    [Tooltip("Current version of the game.")]
     public string gameVer = "GAME_VER";
 
     [HideInInspector] public bool enableCameraMovement = false;
     [HideInInspector] public bool onPlanet = false;
 
+    [HideInInspector] public string planetName;
+
     [HideInInspector] public double secondsPassed;
     [HideInInspector] public GameObject itemToPlace;
     [HideInInspector] public InventoryItem itemHolding;
     [HideInInspector] public GameObject playerPlanet;
-
-    private TimeController timeController;
 
     #region Singleton
     public static GameManager instance = null;
@@ -50,10 +46,6 @@ public class GameManager : MonoBehaviour
             planetName = "Eos";
 
         playerPlanet = GameObject.FindGameObjectWithTag("Player");
-        timeController = gameObject.GetComponent<TimeController>();
-
-        //if (skipMenu)
-        //    StartGame();
 	}
 
     private void Update()

@@ -17,6 +17,9 @@ public class Sorting : MonoBehaviour
     private GameObject spawnedItem;
     private InventoryItem reward;
 
+    private Energy energyInstance;
+    private Inventory inventoryInstance;
+
     #region Singleton
     public static Sorting instance;
     private void Awake()
@@ -30,6 +33,9 @@ public class Sorting : MonoBehaviour
 
     private void Start()
     {
+        inventoryInstance   = Inventory.instance;
+        energyInstance      = Energy.instance;
+
         SpawnNewObject();
     }
 
@@ -38,7 +44,7 @@ public class Sorting : MonoBehaviour
         if (itemsSortedCorrectly == 1)
         {
             reward = RewardPlayer();
-            bool playerRewarded = Inventory.instance.Add(reward);
+            bool playerRewarded = inventoryInstance.Add(reward);
 
             if (!playerRewarded || reward == null)
                 Debug.Log("Could not reward player!");
@@ -51,7 +57,7 @@ public class Sorting : MonoBehaviour
 
     public void SortedCorrectly(GameObject item)
     {
-        Energy.instance.RemoveEnergy(1);
+        energyInstance.RemoveEnergy(1);
         itemsSortedCorrectly++;
 
         Destroy(item);
@@ -60,7 +66,7 @@ public class Sorting : MonoBehaviour
 
     public void SortedIncorrectly(GameObject item)
     {
-        Energy.instance.RemoveEnergy(1);
+        energyInstance.RemoveEnergy(1);
 
         Destroy(item);
         SpawnNewObject();

@@ -26,13 +26,13 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Canvas gameCanvas;
 
     [Header("Debug")]
-    [SerializeField] private string planetName = "Foobar";
     [SerializeField] private TMPro.TMP_Text[] statsTexts;
     [SerializeField] private TMPro.TMP_Text gameVer;
 
-    private RewardNotification rewardNotif;
+    private string planetName;
 
-    GameManager GM;
+    private RewardNotification _RewardNotification;
+    private GameManager _GameManager;
 
     #region Singleton
     public static UIManager instance = null;
@@ -47,10 +47,11 @@ public class UIManager : MonoBehaviour {
 
     private void Start()
     {
-        GM = GameManager.instance;
+        _RewardNotification = UI_RewardNotification.GetComponent<RewardNotification>();
+        _GameManager = GameManager.instance;
 
-        gameVer.text = GM.gameVer;
-        planetName = GM.planetName;
+        gameVer.text = _GameManager.gameVer;
+        planetName = _GameManager.planetName;
 
         foreach (TMPro.TMP_Text _text in planetTexts)
         {
@@ -61,31 +62,30 @@ public class UIManager : MonoBehaviour {
         statsTexts[1].text = "Not yet functional.";
         statsTexts[2].text = "Not yet functional.";
 
-        rewardNotif = UI_RewardNotification.GetComponent<RewardNotification>();
 
         StartCoroutine(BeginGameUI());
     }
 
-    public void ToggleSortingUI()
+    public void _ToggleSortingUI()
     {
         UI_Sorting.SetActive(!UI_Sorting.activeSelf);
         UI_Sidebar.SetActive(!UI_Sorting.activeSelf);
     }
 
-    public void ToggleInventoryUI()
+    public void _ToggleInventoryUI()
     {
-        GM.enableCameraMovement = !GM.enableCameraMovement;
+        _GameManager.enableCameraMovement = !_GameManager.enableCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
         UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }
 
-    public void ToggleSidebarUI()
+    public void _ToggleSidebarUI()
     {
         UI_Sidebar.SetActive(!UI_Sidebar.activeSelf);
         UI_MSidebar.SetActive(!UI_MSidebar.activeSelf);
     }
 
-    public void ToggleJournalUI()
+    public void _ToggleJournalUI()
     {
         UI_Sidebar.SetActive(!UI_Sidebar.activeSelf);
         UI_Journal.SetActive(!UI_Journal.activeSelf);
@@ -93,8 +93,8 @@ public class UIManager : MonoBehaviour {
 
     public void RewardNotif(InventoryItem item)
     {
-        rewardNotif.transform.gameObject.SetActive(true);
-        rewardNotif.DisplayNotification(item);
+        _RewardNotification.transform.gameObject.SetActive(true);
+        _RewardNotification.DisplayNotification(item);
     }
 
     #region Journal Functions
@@ -111,17 +111,20 @@ public class UIManager : MonoBehaviour {
         growthTime.text = item.growthTime.ToString();
     }
 
-    public void ShowStatsPage()
+    public void _StatsPage()
     {
         ItemPage.SetActive(false);
         StatsPage.SetActive(true);
     }
     #endregion
 
+    [System.Obsolete("This function will be removed in future updates, avoid using it. Leftover after old UI.")]
     public void GameUI()
     {
         UI_MSidebar.SetActive(true);
     }
+
+    /* Organise the two below */
 
     IEnumerator BeginGameUI()
     {
