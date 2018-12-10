@@ -35,7 +35,7 @@ public class SortingObject : MonoBehaviour, IDragHandler {
 
     private void Update()
     {
-        objectCollider.size = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y);
+        objectCollider.size = new Vector2(rectTransform.sizeDelta.x / 1.5f, rectTransform.sizeDelta.y / 1.5f);
     } 
 
     public void OnDrag(PointerEventData eventData)

@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField] private TMPro.TMP_Text[] statsTexts;
-    [SerializeField] private TMPro.TMP_Text gameVer;
+    [SerializeField] private TMPro.TMP_Text gameVer, currTime;
 
     private string planetName;
 
@@ -71,7 +71,15 @@ public class UIManager : MonoBehaviour {
         statsTexts[2].text = "Not yet functional.";
 
 
+        UI_NewItem.SetActive(false);
+        UI_NewReward.SetActive(false);
+
         StartCoroutine(BeginGameUI());
+    }
+
+    private void Update()
+    {
+        currTime.text = System.DateTime.Now.ToShortTimeString();
     }
 
     #region Button Functions
