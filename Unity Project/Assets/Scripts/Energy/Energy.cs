@@ -29,7 +29,7 @@ public class Energy : MonoBehaviour
 
     private float countTime = 5.0f;
 
-    private float timer;
+    [SerializeField] private float timer = 0;
     private float startEnergy;
     private float currentEnergy;
     private float desiredEnergy;
@@ -49,7 +49,7 @@ public class Energy : MonoBehaviour
     {
         UpdateUI();
         SetEnergy(maxEnergy);
-        timer = refillTime;
+        //timer = refillTime;
     }
 
     /// <summary>
@@ -59,6 +59,9 @@ public class Energy : MonoBehaviour
     {
         startEnergy = currentEnergy;
         desiredEnergy = value;
+
+        if (desiredEnergy > maxEnergy)
+            desiredEnergy = maxEnergy;
     }
 
     /// <summary>
@@ -68,6 +71,9 @@ public class Energy : MonoBehaviour
     {
         startEnergy = currentEnergy;
         desiredEnergy += value;
+
+        if (desiredEnergy > maxEnergy)
+            desiredEnergy = maxEnergy;
     }
 
     public void RemoveEnergy(float value)
@@ -83,15 +89,15 @@ public class Energy : MonoBehaviour
             desiredEnergy = maxEnergy;
 
         #region Simple Energy Refill
-        if (timer >= 0.0f)
+        if (timer <= refillTime)
         {
-            timer -= Time.deltaTime;
+            timer += Time.deltaTime;
         }
-        else if (timer <= 0.0f)
+        else if (timer >= refillTime)
         {
             Debug.Log("Added " + refillAmnt + " energy, after " + refillTime + " seconds.");
             AddEnergy(refillAmnt);
-            timer = refillTime;
+            timer = 0.0f;
         }
         #endregion
 
