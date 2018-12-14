@@ -372,6 +372,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87dd0eaa0db116c42b56e86ab9a27ce6, type: 2}
   - {fileID: 11400000, guid: a762bd29d6a573d429b05e070bacb1a8, type: 2}
   - {fileID: 11400000, guid: 52f4598b3ebc5774b88546b096c268e5, type: 2}
+  - {fileID: 11400000, guid: 4b57ac9d9a19e3f4186929d1bf5eb0b0, type: 2}
+  - {fileID: 11400000, guid: 361ba08fd232b2c4a9aa0faa43a32522, type: 2}
   sortingObjectPrefab: {fileID: 1137087272211926, guid: c6fd16ded5f772141bc46b65cc29663a,
     type: 2}
   itemsParent: {fileID: 958256710}
