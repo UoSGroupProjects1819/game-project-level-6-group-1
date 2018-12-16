@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 375136164}
   - component: {fileID: 375136163}
   - component: {fileID: 375136159}
+  - component: {fileID: 375136166}
   m_Layer: 0
   m_Name: _SCRIPTS
   m_TagString: Untagged
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7334235bcefabf04087ca3b16315516b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildVersion: v2018.12.4.3
+  buildVersion: v2018.12.5
   planetName: 
   itemHolding: {fileID: 0}
   treePrefab: {fileID: 0}
@@ -404,6 +405,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItems: []
   inventorySpace: 24
+--- !u!114 &375136166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 375136158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf8cdf9f8fa38b48b21038406a8d0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &660474473
 Prefab:
   m_ObjectHideFlags: 0

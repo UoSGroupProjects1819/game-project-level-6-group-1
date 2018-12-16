@@ -29,13 +29,16 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public enum GameState { Menu, Gameplay, Sorting, PlaceItem };
     [HideInInspector] public GameState currentState;
 
+    UIManager UI;
+
     private void Start ()
     {
-        planetRef = GameObject.FindGameObjectWithTag("Player");
-        planetName = PlayerPrefs.GetString("PlanetName");
+        UI = UIManager.instance;
 
-        if (planetName == "")
-            planetName = "Eos";
+        SaveManager.instance.LoadData();
+        UI.UpdateUI();
+
+        planetRef = GameObject.FindGameObjectWithTag("Player");
 	}
 
     private void Update()
@@ -70,16 +73,20 @@ public class GameManager : MonoBehaviour
     }
 
     #region Getters & Setters
-    public string GetPlanetName { get { return planetName; } }
+    public string PlanetName { get { return planetName; } set { planetName = value; } }
     public string GetBuildVersion { get { return buildVersion; } }
     #endregion
 
     private void OnApplicationQuit()
     {
+        SaveManager.instance.SaveGame();
+        
         // Delete player prefs when done.
         // Should probably make a note, to remove this when shipping.
         if (Debug.isDebugBuild)
+        {
             PlayerPrefs.DeleteAll();
-        
+            //SaveManager.instance.ClearSaveFile();
+        }
     }
 }

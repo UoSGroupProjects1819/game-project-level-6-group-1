@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private TMPro.TMP_Text[] statsTexts;
     [SerializeField] private TMPro.TMP_Text gameVer, currTime;
 
+    [HideInInspector] public System.DateTime startDate;
+
     private string planetName;
 
     private RewardNotification newItem;
@@ -51,22 +53,15 @@ public class UIManager : MonoBehaviour {
     {
         GM = GameManager.instance;
 
+        startDate = System.DateTime.Now;
+
         newItem     = UI_NewItem.GetComponent<RewardNotification>();
         newReward   = UI_NewReward.GetComponent<RewardNotification>();
 
         gameVer.text = GM.GetBuildVersion;
-        planetName = GM.GetPlanetName;
-
-        if (planetName == "")
-            planetName = "Eos";
-
-        foreach (TMPro.TMP_Text _text in planetTexts)
-        {
-            _text.text = planetName;
-        }
 
         // Temporary
-        statsTexts[0].text = System.DateTime.Now.ToShortDateString();
+        statsTexts[0].text = startDate.ToShortDateString();
         statsTexts[1].text = "Not yet functional.";
         statsTexts[2].text = "Not yet functional.";
 
@@ -75,6 +70,19 @@ public class UIManager : MonoBehaviour {
         UI_NewReward.SetActive(false);
 
         StartCoroutine(BeginGameUI());
+    }
+
+    public void UpdateUI()
+    {
+        planetName = GM.PlanetName;
+
+        if (planetName == "")
+            planetName = "Eos";
+
+        foreach (TMPro.TMP_Text _text in planetTexts)
+        {
+            _text.text = planetName;
+        }
     }
 
     private void Update()
@@ -143,14 +151,6 @@ public class UIManager : MonoBehaviour {
         StatsPage.SetActive(true);
     }
     #endregion
-
-    //[System.Obsolete("This function will be removed in future updates, avoid using it. Leftover after old UI.")]
-    //public void GameUI()
-    //{
-    //    UI_MSidebar.SetActive(true);
-    //}
-
-    /* Organise the two below */
 
     IEnumerator BeginGameUI()
     {
