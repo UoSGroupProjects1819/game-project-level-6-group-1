@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1356828774199446
 GameObject:
   m_ObjectHideFlags: 1
@@ -108,6 +108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4162621184473184}
+  - component: {fileID: 114125902918997426}
   m_Layer: 0
   m_Name: PlanetObject
   m_TagString: Untagged
@@ -281,8 +282,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114307881684811312}
-        m_MethodName: _MoveItemButton
+      - m_Target: {fileID: 114125902918997426}
+        m_MethodName: _MoveItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -346,12 +347,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114307881684811312
+--- !u!114 &114125902918997426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1424566132766144}
+  m_GameObject: {fileID: 1577199826214330}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35da1f728a230ff4fa3af936b7c0922b, type: 3}
@@ -362,6 +363,27 @@ MonoBehaviour:
   moveItemSprite: {fileID: 0}
   moveButton: {fileID: 1191384346872924}
   acceptButton: {fileID: 1071664568764536}
+  objectSprite: {fileID: 1424566132766144}
+  enableWatering: 0
+  scrObject: {fileID: 0}
+  moveItem: 0
+--- !u!114 &114307881684811312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424566132766144}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35da1f728a230ff4fa3af936b7c0922b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyStar: {fileID: 1965270997328306}
+  timerText: {fileID: 114763656803610360}
+  moveItemSprite: {fileID: 0}
+  moveButton: {fileID: 1191384346872924}
+  acceptButton: {fileID: 1071664568764536}
+  objectSprite: {fileID: 0}
   enableWatering: 0
   scrObject: {fileID: 0}
   moveItem: 0

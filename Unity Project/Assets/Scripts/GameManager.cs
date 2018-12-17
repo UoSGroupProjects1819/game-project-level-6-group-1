@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GameObject treePrefab;
     [HideInInspector] public GameObject planetRef;
 
-    [HideInInspector] public bool allowCameraMovement = false;
+    public bool stopCameraMovement = false;
 
     #region Singleton
     public static GameManager instance = null;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         // THIS SHOULD BE IN ITS OWN THING
         if (currentState == GameState.PlaceItem)
         {
-            allowCameraMovement = true;
+            stopCameraMovement = true;
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
                 tempObject = null;
                 itemHolding = null;
                 treePrefab = null;
-                allowCameraMovement = false;
+                stopCameraMovement = false;
             }
         }
     }

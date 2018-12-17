@@ -13,6 +13,7 @@ public class PlanetObject : MonoBehaviour {
     [SerializeField] private TMPro.TMP_Text timerText;
     [SerializeField] private Sprite moveItemSprite;
     [SerializeField] private GameObject moveButton, acceptButton;
+    public GameObject objectSprite;
 
     [Header("Debug Stuff")]
     [SerializeField] private bool enableWatering = false;
@@ -43,20 +44,26 @@ public class PlanetObject : MonoBehaviour {
     private Vector3 desiredSize;
     private Vector3 startSize;
 
+    public void _MoveItem()
+    {
+        GameManager.instance.stopCameraMovement = true;
+        moveItem = true;
+    }
+
+    public void _ConfirmMovement()
+    {
+        GameManager.instance.stopCameraMovement = false;
+        moveItem = false;
+    }
+
     private void Start()
     {
         // Set the references when object is instantiated.
-        sprRenderer = GetComponent<SpriteRenderer>();
+        sprRenderer = objectSprite.GetComponent<SpriteRenderer>();
         timerParent = timerText.transform.parent.gameObject;
         playerPlanet = GameManager.instance.planetRef;
 
-        //if (scrObject.journalEntry != null)
-        //{
-        //    journalReward = scrObject.journalEntry;
-        //    Journal.instance.Add(scrObject);
-        //}
-
-        transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
+        objectSprite.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 
         isWatered = true;
         currentWaterTimer = waterInterval;
@@ -69,6 +76,17 @@ public class PlanetObject : MonoBehaviour {
 
     private void Update()
     {
+        if (moveItem && Input.GetMouseButton(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0.0f;
+
+            transform.position = mousePos;
+        }
+
+        if (moveItem && Input.GetMouseButtonDown(1))
+            _ConfirmMovement();
+
         if (isWatered && enableWatering)
             currentWaterTimer -= Time.deltaTime;
 
@@ -81,12 +99,14 @@ public class PlanetObject : MonoBehaviour {
         if (Camera.main.orthographicSize < 3)
         {
             timerParent.GetComponent<Image>().CrossFadeAlpha(1.0f, 0.2f, true);
+            moveButton.GetComponent<Image>().CrossFadeAlpha(1.0f, 0.2f, true);
             timerText.CrossFadeAlpha(1.0f, 0.2f, true);
             UpdateTime(remainTime, timerText);
         }
         else
         {
             timerParent.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.2f, true);
+            moveButton.GetComponent<Image>().CrossFadeAlpha(0.0f, 0.2f, true);
             timerText.CrossFadeAlpha(0.0f, 0.2f, true);
         }
     }
@@ -152,7 +172,7 @@ public class PlanetObject : MonoBehaviour {
 
     IEnumerator ManageGrowth(float growthTime)
     {
-        startSize   = gameObject.transform.localScale;
+        startSize   = objectSprite.transform.localScale;
         desiredSize = new Vector3(1.0f, 1.0f, 1.0f);
 
         currentTime = 0.0f;
@@ -166,7 +186,7 @@ public class PlanetObject : MonoBehaviour {
             if (!isWatered && enableWatering)
                 yield return new WaitUntil(CheckForWateredBool);
 
-            gameObject.transform.localScale = Vector3.Lerp(startSize, desiredSize, currentTime / targetTime);
+            objectSprite.transform.localScale = Vector3.Lerp(startSize, desiredSize, currentTime / targetTime);
 
             currentTime = Time.time;
             remainTime  = targetTime - currentTime;

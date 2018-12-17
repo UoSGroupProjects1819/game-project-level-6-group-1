@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour {
 
     public void _ToggleInventoryUI()
     {
-        GM.allowCameraMovement = !GM.allowCameraMovement;
+        GM.stopCameraMovement = !GM.stopCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
         UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }
