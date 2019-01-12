@@ -5,8 +5,8 @@ using UnityEngine;
 public class Sorting : MonoBehaviour
 {
     [Header("Player Rewards")]
-    [SerializeField] private InventoryItem[] vegetableRewards;
-    [SerializeField] private InventoryItem[] fruitRewards;
+    public InventoryItem[] vegetableRewards;
+    public InventoryItem[] fruitRewards;
 
     [SerializeField] private SortingItem[] sortingObjects;
     [SerializeField] private GameObject sortingObjectPrefab;

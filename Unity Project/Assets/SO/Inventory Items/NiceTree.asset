@@ -11,8 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afd8011d5b43834a9eab6354d0d16f8, type: 3}
   m_Name: NiceTree
   m_EditorClassIdentifier: 
+  objectID: niceTree
   name: Nice Tree
+  itemDescription: Henlo!
   itemIcon: {fileID: 21300000, guid: ac56f78988931134abe2a03d3b7b6103, type: 3}
+  journalEntry: {fileID: 0}
   spawnObject: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa,
     type: 2}
   objectSprites:

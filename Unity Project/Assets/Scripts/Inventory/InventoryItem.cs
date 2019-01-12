@@ -5,6 +5,9 @@ public class InventoryItem : ScriptableObject {
     /* MAKE THE VARIABLES PRIVATE AT SOME POINT && USE GETTERES */
 
     [Header("Item Properties")]
+    [Tooltip("Unique ID for the item.")]
+    public string objectID = "";
+
     [Tooltip("This is the name of the object, it can be changed to anything. Later maybe we can let people name items?")]
     new public string name = "New Item";
 

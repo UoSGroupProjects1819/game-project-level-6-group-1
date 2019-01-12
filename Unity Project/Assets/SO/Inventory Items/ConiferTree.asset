@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afd8011d5b43834a9eab6354d0d16f8, type: 3}
   m_Name: ConiferTree
   m_EditorClassIdentifier: 
+  objectID: coniferTree
   name: Birch Tree
+  itemDescription: Henlo!
   itemIcon: {fileID: 21300000, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   journalEntry: {fileID: 11400000, guid: 99a1a701d0e136346bb8bd05e0c02a9c, type: 2}
   spawnObject: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa,

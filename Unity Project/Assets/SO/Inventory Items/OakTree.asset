@@ -11,7 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1afd8011d5b43834a9eab6354d0d16f8, type: 3}
   m_Name: OakTree
   m_EditorClassIdentifier: 
+  objectID: oaKTree
   name: Oak Tree
+  itemDescription: Henlo!
   itemIcon: {fileID: 21300020, guid: 07ffcd5d297f20945b489a1aac408a87, type: 3}
   journalEntry: {fileID: 11400000, guid: b40af4279594dc847a07a09c5c21320f, type: 2}
   spawnObject: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa,

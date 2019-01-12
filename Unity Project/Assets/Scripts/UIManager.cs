@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private TMPro.TMP_Text[] statsTexts;
     [SerializeField] private TMPro.TMP_Text gameVer, currTime;
 
-    [HideInInspector] public System.DateTime startDate;
+    //[HideInInspector] public System.DateTime startDate;
 
     private string planetName;
 
@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour {
     {
         GM = GameManager.instance;
 
-        startDate = System.DateTime.Now;
+        //startDate = GM.GetStartDate;
 
         newItem     = UI_NewItem.GetComponent<RewardNotification>();
         newReward   = UI_NewReward.GetComponent<RewardNotification>();
@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour {
         gameVer.text = GM.GetBuildVersion;
 
         // Temporary
-        statsTexts[0].text = startDate.ToShortDateString();
+        //statsTexts[0].text = startDate.ToShortDateString();
         statsTexts[1].text = "Not yet functional.";
         statsTexts[2].text = "Not yet functional.";
 

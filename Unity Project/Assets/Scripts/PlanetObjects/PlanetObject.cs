@@ -26,9 +26,10 @@ public class PlanetObject : MonoBehaviour {
     private Sprite growingSprite;
     private Sprite finishedSprite;
 
+
+    private float remainTime;
     private float growthTime;
     private float targetTime;
-    private float remainTime;
     private float currentTime;
     private float elapsedTime;
 
@@ -43,6 +44,8 @@ public class PlanetObject : MonoBehaviour {
     private GameObject timerParent;
     private Vector3 desiredSize;
     private Vector3 startSize;
+
+    public float RemainingTime { get { return remainTime; } set { remainTime = value; } }
 
     public void _MoveItem()
     {
