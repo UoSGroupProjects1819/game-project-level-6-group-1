@@ -137,8 +137,8 @@ public class SaveManager : MonoBehaviour
             GameObject _tempGameObject      = gameManager.SpawnPlanetItem(_scriptableObject, _tempObjPos);
             PlanetObject _tempPlanetObject  = _tempGameObject.GetComponent<PlanetObject>();
 
-            _tempPlanetObject.TargetTime     = Time.time + _obj.remainingTime;
-            _tempGameObject.name             = _obj.objectName;
+            _tempPlanetObject.RemainingTime = _obj.remainingTime;
+            _tempGameObject.name            = _obj.objectName;
 
             // Object has been created successfully, and now exists back in the game.
             // Continue with the next object from the save file.

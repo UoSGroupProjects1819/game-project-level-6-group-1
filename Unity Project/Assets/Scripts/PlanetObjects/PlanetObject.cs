@@ -180,7 +180,7 @@ public class PlanetObject : MonoBehaviour {
         desiredSize = new Vector3(1.0f, 1.0f, 1.0f);
 
         currentTime = 0.0f;
-        targetTime  = Time.time + growthTime;
+        targetTime  = Time.time + remainTime;
 
         currentWaterTimer = waterInterval;
         sprRenderer.sprite = growingSprite;
