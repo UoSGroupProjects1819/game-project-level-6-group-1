@@ -44,7 +44,12 @@ public class GameManager : MonoBehaviour
         uiManager = UIManager.instance;
         saveManager = SaveManager.instance;
 
-        SaveManager.instance.LoadData();
+        planetName = PlayerPrefs.GetString("PlanetName");
+
+        //bool gameLoaded = saveManager.LoadGame();
+        //if (!gameLoaded)
+        //    Debug.LogError("Couldn't load save data");
+
         uiManager.UpdateUI();
 
         if (startDate == null)
@@ -53,22 +58,30 @@ public class GameManager : MonoBehaviour
         planetRef = GameObject.FindGameObjectWithTag("Player");
 	}
 
-    //public void SpawnPlanetItem(InventoryItem scriptableObject, Vector3 objectPosition)
-    //{
-    //    // Temporary empty planet object.
-    //    GameObject _tempObject = Instantiate(treePrefab, objectPosition, Quaternion.identity);
+    public GameObject SpawnPlanetItem(InventoryItem _scriptableObject, Vector3 _objectPosition)
+    {
+        // Create a temporaray object, populate it with data, and return the gameobject.
+        GameObject _tempObject = Instantiate(treePrefab, _objectPosition, Quaternion.identity);
 
-    //    _tempObject.GetComponentInChildren<PlanetObject>().scrObject = scriptableObject;
-    //    _tempObject.name = scriptableObject.objectID;
-    //    planetObjects.Add(_tempObject);
+        _tempObject.GetComponentInChildren<PlanetObject>().scrObject    = _scriptableObject;
+        _tempObject.name                                                = _scriptableObject.objectID;
+        _tempObject.transform.parent                                    = planetRef.transform;
 
-    //    _tempObject.transform.parent = planetRef.transform;
-    //}
+        planetObjects.Add(_tempObject);
+
+        return _tempObject;
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
-            saveManager.LoadGame();
+        {
+            bool gameLoaded = saveManager.LoadGame();
+            if (!gameLoaded)
+                Debug.Log("Load failed.");
+            else
+                Debug.Log("Game loaded.");
+        }
 
         if (Input.GetKeyDown(KeyCode.S))
             saveManager.SaveGame();

@@ -38,7 +38,7 @@ public class PlanetObject : MonoBehaviour {
 
     private bool finishedGrowing;
     private bool isWatered;
-    [SerializeField] private bool moveItem;
+    private bool moveItem;
 
     private GameObject playerPlanet;
     private GameObject timerParent;
@@ -46,6 +46,7 @@ public class PlanetObject : MonoBehaviour {
     private Vector3 startSize;
 
     public float RemainingTime { get { return remainTime; } set { remainTime = value; } }
+    public float TargetTime { get { return targetTime; } set { targetTime = value; } }
 
     public void _MoveItem()
     {
@@ -194,7 +195,7 @@ public class PlanetObject : MonoBehaviour {
             currentTime = Time.time;
             remainTime  = targetTime - currentTime;
 
-            if (currentTime == targetTime)
+            if (currentTime >= targetTime)
                 finishedGrowing = true;
 
             yield return null;

@@ -1,9 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using SimpleJSON;
+
+/// <summary>
+/// With this version of Save/Load system, SimpleJSON is no longer used. The system now utilizes Unity's built-in JSON
+///     serializer. With a second script 'JsonHelper', there is no need to use the additional library. At a later date,
+///     the library should be removed to avoid having it being built into the game.
+///     
+/// ToDo:
+///     - Remove SimpleJSON once certain its no longer being used/no longer needed to save/load.
+/// </summary>
 
 [Serializable]
 public struct PlanetObjectData
@@ -11,20 +17,21 @@ public struct PlanetObjectData
     public string objectId;
     public string objectName;
     public float posX, posY;
-    public float remainTime;
+    public int remainingTime;
 }
 
 public class SaveManager : MonoBehaviour
 {
-    private Journal journal;
-    private Inventory inventory;
-    private GameManager gameManager;
+    Sorting sortingManager;
+    GameManager gameManager;
+    Inventory inventory;
+    Journal journal;
 
-    private string planetDataPath = "/PlanetSettings.json";
-    private string objectSavePath = "/PlanetObjects.json";
-    private string saveString = "";
-    private string loadString = "";
-    private JSONObject objectsToSave = new JSONObject();
+    private string planetDataPath       = "/PlanetSettings.json";   // Temp path for the planet settings file.
+    private string objectSavePath       = "/PlanetObjects.json";    // Temp path for the planet's objects save.
+    private string saveString           = "";                       // String used for the save data.
+    private string loadString           = "";                       // String used for the load data.
+
 
     #region Singleton
     public static SaveManager instance;
@@ -39,12 +46,17 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.instance;
-        inventory   = Inventory.instance;
-        journal     = Journal.instance;
+        sortingManager  = Sorting.instance;
+        gameManager     = GameManager.instance;
+        inventory       = Inventory.instance;
+        journal         = Journal.instance;
     }
 
-    public void SaveGame()
+    // ---- Simple loading and saving of the objects, as more data is saved the system will need to be exapanded.
+    //          A possiblity of having a separate save/load scripts to keep this one clean, in the future.
+    //          For now this is sufficient, as long as kept tidy and easy to read.
+
+    public bool SaveGame()
     {
         PlanetObjectData[] planetObjectInstance = new PlanetObjectData[gameManager.planetObjects.Count];
 
@@ -54,113 +66,90 @@ public class SaveManager : MonoBehaviour
 
             planetObjectInstance[i] = new PlanetObjectData();
 
-            planetObjectInstance[i].objectId = tempGO.GetComponent<PlanetObject>().scrObject.objectID;
-            planetObjectInstance[i].posX = tempGO.transform.position.x;
-            planetObjectInstance[i].posY = tempGO.transform.position.y;
-            planetObjectInstance[i].remainTime = tempGO.GetComponent<PlanetObject>().RemainingTime;
+            planetObjectInstance[i].objectId        = tempGO.GetComponent<PlanetObject>().scrObject.objectID;
+            planetObjectInstance[i].objectName      = tempGO.GetComponent<PlanetObject>().scrObject.name;
+            planetObjectInstance[i].posX            = tempGO.transform.position.x;
+            planetObjectInstance[i].posY            = tempGO.transform.position.y;
+            planetObjectInstance[i].remainingTime   = (int)tempGO.GetComponent<PlanetObject>().RemainingTime;
 
             saveString = JsonHelper.ToJson(planetObjectInstance, true);
         }
 
-        Debug.Log(saveString);
+        if (saveString == "" || saveString == " ")
+        {
+            Debug.LogError("Save string empty! Couldn't save!");
+            return false;
+        }
 
         string path = Application.persistentDataPath + objectSavePath;
         File.WriteAllText(path, saveString);
+
+        return true;
     }
-    
-    // IMPROVE AT SOME POINT?
-    public void LoadGame()
+
+    public bool LoadGame()
     {
-        string tempString = File.ReadAllText(Application.persistentDataPath + objectSavePath);
+        // Check if the save file exists, if it does = load it into the game. Otherwise, return a warning.
+        // Due to how the game is designed, there is no need to return error to the player as it should start a new game.
+        if (File.Exists(Application.persistentDataPath + objectSavePath))
+        {
+            loadString = File.ReadAllText(Application.persistentDataPath + objectSavePath);
+        }
+        else
+        {
+            Debug.LogWarning("Savefile not found.");
+            return false;
+        }
 
-        if (tempString == "")
-            return;
+        if (loadString == "")
+        {
+            Debug.LogError("Savefile empty/corrupted.");
+            return false;
+        }
 
-        PlanetObjectData[] planetObjects = JsonHelper.FromJson<PlanetObjectData>(tempString);
+        // At this point the savefile exists, and it has save data in it. Load the game..
+        PlanetObjectData[] planetObjects = JsonHelper.FromJson<PlanetObjectData>(loadString);
+        InventoryItem _scriptableObject = null;
 
         foreach (PlanetObjectData _obj in planetObjects)
         {
-            Vector3 _objPos = new Vector3(_obj.posX, _obj.posY, 0);
-
-            GameObject _tempObject = Instantiate(gameManager.treePrefab, _objPos, Quaternion.identity);
-            PlanetObject _tempPlanetObj = _tempObject.GetComponent<PlanetObject>();
-
-            foreach (InventoryItem _inv in Sorting.instance.vegetableRewards)
+            // Find the scriptable object that has been used in the object before, by searching for the ID.
+            // This approach can become problematic if the IDs changed, or are removed. In this case savegames won't
+            //  be compatible with the previous versions of the game.
+            foreach (InventoryItem _inv in sortingManager.fruitRewards)
             {
                 if (_obj.objectId == _inv.objectID)
-                {
-                    _tempPlanetObj.scrObject = _inv;
-                }
+                    _scriptableObject = _inv;
             }
-
-            foreach (InventoryItem _inv in Sorting.instance.fruitRewards)
+            foreach (InventoryItem _inv in sortingManager.vegetableRewards)
             {
                 if (_obj.objectId == _inv.objectID)
-                {
-                    _tempPlanetObj.scrObject = _inv;
-                }
+                    _scriptableObject = _inv;
+            }
+            if (_scriptableObject == null)
+            {
+                Debug.LogError("Scriptable object could not be found, while loading the game object. Have the IDs changed?");
+                return false;
             }
 
-            _tempPlanetObj.RemainingTime = _obj.remainTime;
-            _tempObject.name = _obj.objectId;
+            // At this point the scriptable object has been found, and the object can be loaded back into the game.
+            Vector3 _tempObjPos             = new Vector3(_obj.posX, _obj.posY, 0.0f);
+            GameObject _tempGameObject      = gameManager.SpawnPlanetItem(_scriptableObject, _tempObjPos);
+            PlanetObject _tempPlanetObject  = _tempGameObject.GetComponent<PlanetObject>();
 
-            _tempObject.transform.parent = gameManager.planetRef.transform;
-            gameManager.planetObjects.Add(_tempObject);
+            _tempPlanetObject.TargetTime     = Time.time + _obj.remainingTime;
+            _tempGameObject.name             = _obj.objectName;
+
+            // Object has been created successfully, and now exists back in the game.
+            // Continue with the next object from the save file.
         }
+
+        // Game loaded successfully.
+        return true;
     }
 
-
-
-
-
-
-
-
-    public void SavePlanet(string planetName, string gameVersion,
-                            string startDate, string sessionTime,
-                            List<GameObject> planetObjects)
+    public void ClearSaveData()
     {
-
-    }
-
-    public void SavePlanetName(string planetName)
-    {
-        JSONObject planetJSON = new JSONObject();
-        planetJSON.Add("PlanetName", planetName);
-
-        string path = Application.persistentDataPath + "/SaveGame.json";
-        File.WriteAllText(path, planetJSON.ToString());
-
-        Debug.Log(planetJSON.ToString());
-    }
-
-    public void SaveGameOld()
-    {
-        JSONObject planetJSON = new JSONObject();
-        planetJSON.Add("PlanetName", gameManager.PlanetName);
-        planetJSON.Add("GameVersion", gameManager.GetBuildVersion);
-        //planetJSON.Add("StartDate", UIManager.instance.startDate.ToShortDateString());
-
-        string path = Application.persistentDataPath + "/SaveGame.json";
-        File.WriteAllText(path, planetJSON.ToString());
-    }
-
-    public void LoadData()
-    {
-        string path = Application.persistentDataPath + "/SaveGame.json";
-        string jsonString = File.ReadAllText(path);
-
-        JSONObject planetJSON = (JSONObject)JSON.Parse(jsonString);
-
-        // Set values:
-        GameManager.instance.PlanetName = planetJSON["PlanetName"];
-    }
-
-    public void ClearSaveFile()
-    {
-        string path = Application.persistentDataPath + "/SaveGame.json";
-
-        JSONObject emptySave = new JSONObject();
-        File.WriteAllText(path, emptySave.ToString());
+        throw new NotImplementedException();
     }
 }

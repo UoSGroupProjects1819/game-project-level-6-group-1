@@ -28,8 +28,8 @@ public class Menu : MonoBehaviour {
             return;
         }
 
-        //PlayerPrefs.SetString("PlanetName", planetNameTemp);
-        SaveManager.instance.SavePlanetName(planetNameTemp);
+        PlayerPrefs.SetString("PlanetName", planetNameTemp);
+        //SaveManager.instance.SavePlanetName(planetNameTemp);
         anim.Play("LoadingScreen");
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
