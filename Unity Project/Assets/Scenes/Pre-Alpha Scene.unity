@@ -323,13 +323,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7334235bcefabf04087ca3b16315516b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildVersion: v2019.01.4
-  planetName: 
+  buildVersion: v2019.01.4.1
+  planetName: Test
   planetObjects: []
   treePrefab: {fileID: 1577199826214330, guid: c0e8931e2eac3cc42930003610858faa, type: 2}
+  stopCameraMovement: 0
   itemHolding: {fileID: 0}
   planetRef: {fileID: 0}
-  stopCameraMovement: 0
   currentState: 0
 --- !u!114 &375136162
 MonoBehaviour:

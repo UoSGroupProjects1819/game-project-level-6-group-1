@@ -7,9 +7,7 @@ using UnityEngine.UI;
 public class PlanetObject : MonoBehaviour {
 
     [Header("Object Properties")]
-    [Tooltip("This is the start that players will collect for additional energy.")]
     [SerializeField] private GameObject energyStar;
-    [Tooltip("This is the timer that displays how much longer the object has left to grow.")]
     [SerializeField] private TMPro.TMP_Text timerText;
     [SerializeField] private Sprite moveItemSprite;
     [SerializeField] private GameObject moveButton, acceptButton;
@@ -18,14 +16,12 @@ public class PlanetObject : MonoBehaviour {
     [Header("Debug Stuff")]
     [SerializeField] private bool enableWatering = false;
 
-    public InventoryItem scrObject;
+    [HideInInspector] public InventoryItem scrObject;
 
     private JournalItem journalReward;
-
     private SpriteRenderer sprRenderer;
     private Sprite growingSprite;
     private Sprite finishedSprite;
-
 
     private float remainTime;
     private float growthTime;
@@ -45,8 +41,10 @@ public class PlanetObject : MonoBehaviour {
     private Vector3 desiredSize;
     private Vector3 startSize;
 
+    #region Getters & Setters
     public float RemainingTime { get { return remainTime; } set { remainTime = value; } }
     public float TargetTime { get { return targetTime; } set { targetTime = value; } }
+    #endregion
 
     public void _MoveItem()
     {
@@ -62,10 +60,9 @@ public class PlanetObject : MonoBehaviour {
 
     private void Start()
     {
-        // Set the references when object is instantiated.
-        sprRenderer = objectSprite.GetComponent<SpriteRenderer>();
-        timerParent = timerText.transform.parent.gameObject;
-        playerPlanet = GameManager.instance.planetRef;
+        sprRenderer     = objectSprite.GetComponent<SpriteRenderer>();
+        timerParent     = timerText.transform.parent.gameObject;
+        playerPlanet    = GameManager.instance.planetRef;
 
         objectSprite.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
 
@@ -80,6 +77,10 @@ public class PlanetObject : MonoBehaviour {
 
     private void Update()
     {
+        /* THIS WHOLE THING PROBABLY NEEDS REWRITING */
+        // Based on how we will handle the UI for the objects, this might need rewriting.
+        // Creating a separate script for the UI elements might be more beneficial, keeping this one more tidy.
+
         if (moveItem && Input.GetMouseButton(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -121,6 +122,7 @@ public class PlanetObject : MonoBehaviour {
         finishedSprite  = scrObject.objectSprites[1];
 
         growthTime = scrObject.growthTime;
+        remainTime = scrObject.growthTime;
         waterInterval = scrObject.wateringInterval;
 
         StartCoroutine(ManageGrowth(growthTime));

@@ -5,23 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Script References
-    SaveManager saveManager;
-    UIManager uiManager;
-    #endregion
-
-    [Header("DEBUG")]
-    [Tooltip("Current version of the game.")]
-    [SerializeField] private string buildVersion;
-    [SerializeField] private string planetName;
-    public List<GameObject> planetObjects;
-
-    public GameObject treePrefab;
-    [HideInInspector] public InventoryItem itemHolding;
-    [HideInInspector] public GameObject planetRef;
-
-    public bool stopCameraMovement = false;
-
     #region Singleton
     public static GameManager instance = null;
     private void Awake()
@@ -32,48 +15,42 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
     }
     #endregion
+    
+    #region Script References
+    SaveManager saveManager;
+    UIManager uiManager;
+    #endregion
 
+    [Header("DEBUG")]
+    [Tooltip("Current version of the game.")]
+    [SerializeField] private string buildVersion;
+    [SerializeField] private string planetName;
+    public List<GameObject> planetObjects;
+    public GameObject treePrefab;
+    public bool stopCameraMovement = false;
+
+
+    // ----
+
+    
     DateTime startDate;
     DateTime sessionTime;
 
+    [HideInInspector] public InventoryItem itemHolding;
+    [HideInInspector] public GameObject planetRef;
     [HideInInspector] public enum GameState { Menu, Gameplay, Sorting, PlaceItem };
     [HideInInspector] public GameState currentState;
 
     private void Start ()
     {
-        uiManager = UIManager.instance;
         saveManager = SaveManager.instance;
-
-        planetName = PlayerPrefs.GetString("PlanetName");
-
-        //bool gameLoaded = saveManager.LoadGame();
-        //if (!gameLoaded)
-        //    Debug.LogError("Couldn't load save data");
-
-        uiManager.UpdateUI();
-
-        if (startDate == null)
-            startDate = DateTime.Now;
-
-        planetRef = GameObject.FindGameObjectWithTag("Player");
+        uiManager   = UIManager.instance;
+        planetRef   = GameObject.FindGameObjectWithTag("Player");
 	}
-
-    public GameObject SpawnPlanetItem(InventoryItem _scriptableObject, Vector3 _objectPosition)
-    {
-        // Create a temporaray object, populate it with data, and return the gameobject.
-        GameObject _tempObject = Instantiate(treePrefab, _objectPosition, Quaternion.identity);
-
-        _tempObject.GetComponentInChildren<PlanetObject>().scrObject    = _scriptableObject;
-        _tempObject.name                                                = _scriptableObject.objectID;
-        _tempObject.transform.parent                                    = planetRef.transform;
-
-        planetObjects.Add(_tempObject);
-
-        return _tempObject;
-    }
 
     private void Update()
     {
+        #region Temporary Saving/Spawning
         if (Input.GetKeyDown(KeyCode.L))
         {
             bool gameLoaded = saveManager.LoadGame();
@@ -85,8 +62,8 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S))
             saveManager.SaveGame();
+        #endregion
 
-        // THIS SHOULD BE IN ITS OWN THING
         if (currentState == GameState.PlaceItem)
         {
             stopCameraMovement = true;
@@ -96,24 +73,37 @@ public class GameManager : MonoBehaviour
                 Vector3 placePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 placePos.z = 0;
 
-                GameObject tempObject = Instantiate(treePrefab, placePos, Quaternion.identity);
-                tempObject.transform.parent = planetRef.transform;
+                SpawnPlanetItem(itemHolding, placePos);
 
-                tempObject.GetComponentInChildren<PlanetObject>().scrObject = itemHolding;
-                tempObject.name = itemHolding.name;
-                planetObjects.Add(tempObject);
-
-                // Cleanup
+                // Cleanup after spawning the item
                 currentState = GameState.Gameplay;
 
                 Inventory.instance.Remove(itemHolding);
 
-                tempObject = null;
                 itemHolding = null;
                 treePrefab = null;
                 stopCameraMovement = false;
             }
         }
+    }
+
+    /// <summary>
+    /// Returns a PlanetObject that is instantiated into the planet.
+    /// </summary>
+    /// <param name="_scriptableObject">Scriptable object that will be used, to get the data, by the planet object.</param>
+    /// <param name="_objectPosition">Vector3 position at which the object should be instantiated.</param>
+    /// <returns></returns>
+    public GameObject SpawnPlanetItem(InventoryItem _scriptableObject, Vector3 _objectPosition)
+    {
+        GameObject _tempObject = Instantiate(treePrefab, _objectPosition, Quaternion.identity);
+
+        _tempObject.GetComponentInChildren<PlanetObject>().scrObject = _scriptableObject;
+        _tempObject.name = _scriptableObject.objectID;
+        _tempObject.transform.parent = planetRef.transform;
+
+        planetObjects.Add(_tempObject);
+
+        return _tempObject;
     }
 
     #region Getters & Setters
@@ -126,16 +116,5 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         sessionTime = DateTime.Now;
-
-        //SaveManager.instance.SaveGame();
-        //saveManager.SaveGame();
-        
-        // Delete player prefs when done.
-        // Should probably make a note, to remove this when shipping.
-        //if (Debug.isDebugBuild)
-        //{
-        //    PlayerPrefs.DeleteAll();
-        //    //SaveManager.instance.ClearSaveFile();
-        //}
     }
 }

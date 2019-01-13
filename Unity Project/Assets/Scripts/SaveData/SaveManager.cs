@@ -12,6 +12,13 @@ using System.IO;
 /// </summary>
 
 [Serializable]
+public struct PlanetData
+{
+    public string planetName;
+    public string startDate;
+}
+
+[Serializable]
 public struct PlanetObjectData
 {
     public string objectId;
@@ -22,17 +29,6 @@ public struct PlanetObjectData
 
 public class SaveManager : MonoBehaviour
 {
-    Sorting sortingManager;
-    GameManager gameManager;
-    Inventory inventory;
-    Journal journal;
-
-    private string planetDataPath       = "/PlanetSettings.json";   // Temp path for the planet settings file.
-    private string objectSavePath       = "/PlanetObjects.json";    // Temp path for the planet's objects save.
-    private string saveString           = "";                       // String used for the save data.
-    private string loadString           = "";                       // String used for the load data.
-
-
     #region Singleton
     public static SaveManager instance;
     private void Awake()
@@ -43,6 +39,18 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
     }
     #endregion
+    
+    #region Script References
+    Sorting sortingManager;
+    GameManager gameManager;
+    Inventory inventory;
+    Journal journal;
+    #endregion
+
+    private string planetDataPath       = "/PlanetSettings.json";   // Temp path for the planet settings file.
+    private string objectSavePath       = "/PlanetObjects.json";    // Temp path for the planet's objects save.
+    private string objectsData          = "";                       // String used for the save data.
+    private string loadString           = "";                       // String used for the load data.
 
     private void Start()
     {
@@ -58,8 +66,19 @@ public class SaveManager : MonoBehaviour
 
     public bool SaveGame()
     {
+        // Save the planet data
+        PlanetData planetInstance = new PlanetData();
+
+        planetInstance.planetName   = gameManager.PlanetName;
+        planetInstance.startDate    = gameManager.GetStartDate;
+
+        string planetData = JsonUtility.ToJson(planetInstance, true);
+
+
+        // Save planet objects
         PlanetObjectData[] planetObjectInstance = new PlanetObjectData[gameManager.planetObjects.Count];
 
+        // ----> consider simplyfying this, and maybe use a foreach instead?
         for (int i = 0; i < gameManager.planetObjects.Count; i++)
         {
             GameObject tempGO = gameManager.planetObjects[i];
@@ -72,17 +91,19 @@ public class SaveManager : MonoBehaviour
             planetObjectInstance[i].posY            = tempGO.transform.position.y;
             planetObjectInstance[i].remainingTime   = (int)tempGO.GetComponent<PlanetObject>().RemainingTime;
 
-            saveString = JsonHelper.ToJson(planetObjectInstance, true);
+            objectsData = JsonHelper.ToJson(planetObjectInstance, true);
         }
 
-        if (saveString == "" || saveString == " ")
+        if (objectsData == "" || objectsData == " ")
         {
             Debug.LogError("Save string empty! Couldn't save!");
             return false;
         }
 
-        string path = Application.persistentDataPath + objectSavePath;
-        File.WriteAllText(path, saveString);
+        string path1 = Application.persistentDataPath + planetDataPath;
+        string path2 = Application.persistentDataPath + objectSavePath;
+        File.WriteAllText(path1, planetData);
+        File.WriteAllText(path2, objectsData);
 
         return true;
     }
