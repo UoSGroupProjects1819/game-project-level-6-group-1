@@ -35,6 +35,7 @@ public class Sorting : MonoBehaviour
 
     private void Start()
     {
+        
         UI                  = UIManager.instance;
         inventoryInstance   = Inventory.instance;
         energyInstance      = Energy.instance;

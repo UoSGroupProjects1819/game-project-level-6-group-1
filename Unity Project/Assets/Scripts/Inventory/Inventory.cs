@@ -13,13 +13,18 @@ public class Inventory : MonoBehaviour
     #region Singleton
     public static Inventory instance;
     private void Awake()
-    {
+    {   
         if (instance == null)
             instance = this;
         else if (instance != null)
             Destroy(gameObject);
     }
     #endregion
+
+    private void Start()
+    {
+        onItemChangedCallback.Invoke();
+    }
 
     public bool Add(InventoryItem item)
     {
