@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SaveSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     #region Script References
     SaveManager saveManager;
     UIManager uiManager;
+    private Inventory inventory;
     #endregion
 
     [Header("DEBUG")]
@@ -46,22 +48,23 @@ public class GameManager : MonoBehaviour
         saveManager = SaveManager.instance;
         uiManager   = UIManager.instance;
         planetRef   = GameObject.FindGameObjectWithTag("Player");
+        inventory   = Inventory.instance;
 	}
 
     private void Update()
     {
         #region Temporary Saving/Spawning
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            bool gameLoaded = saveManager.LoadGame();
-            if (!gameLoaded)
-                Debug.Log("Load failed.");
-            else
-                Debug.Log("Game loaded.");
-        }
+//        if (Input.GetKeyDown(KeyCode.L))
+//        {
+//            bool gameLoaded = saveManager.LoadGame();
+//            if (!gameLoaded)
+//                Debug.Log("Load failed.");
+//            else
+//                Debug.Log("Game loaded.");
+//        }
 
         if (Input.GetKeyDown(KeyCode.S))
-            saveManager.SaveGame();
+            saveManager.SaveGame(planetObjects, inventory.inventoryItems);
         #endregion
 
         if (currentState == GameState.PlaceItem)

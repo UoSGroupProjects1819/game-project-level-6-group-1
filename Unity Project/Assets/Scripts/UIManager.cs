@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject UI_Sidebar;
     [SerializeField] private GameObject UI_MSidebar;
     [SerializeField] private GameObject UI_Inventory;
-    [SerializeField] private GameObject UI_Sorting;
+    //[SerializeField] private GameObject UI_Sorting;
     [SerializeField] private GameObject UI_Journal;
     [SerializeField] private GameObject UI_PlanetBanner;
     [SerializeField] private GameObject UI_NewItem, UI_NewReward;
@@ -91,12 +91,6 @@ public class UIManager : MonoBehaviour {
     }
 
     #region Button Functions
-    public void _ToggleSortingUI()
-    {
-        UI_Sorting.SetActive(!UI_Sorting.activeSelf);
-        UI_Sidebar.SetActive(!UI_Sorting.activeSelf);
-    }
-
     public void _ToggleInventoryUI()
     {
         GM.stopCameraMovement = !GM.stopCameraMovement;

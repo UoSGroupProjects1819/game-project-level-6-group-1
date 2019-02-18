@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlanetObject : MonoBehaviour {
-
+public class PlanetObject : MonoBehaviour
+{
     [Header("Object Properties")]
     [SerializeField] private GameObject energyStar;
     [SerializeField] private TMPro.TMP_Text timerText;
@@ -16,7 +16,7 @@ public class PlanetObject : MonoBehaviour {
     [Header("Debug Stuff")]
     [SerializeField] private bool enableWatering = false;
 
-    [HideInInspector] public InventoryItem scrObject;
+    public InventoryItem scrObject;
 
     private JournalItem journalReward;
     private SpriteRenderer sprRenderer;
