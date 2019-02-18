@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 375136165}
   - component: {fileID: 375136164}
   - component: {fileID: 375136166}
+  - component: {fileID: 375136159}
   m_Layer: 0
   m_Name: _SCRIPTS
   m_TagString: Untagged
@@ -281,6 +282,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!114 &375136159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375136158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5657bd2d82cd09408c9710d7256f221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &375136160
 Transform:
   m_ObjectHideFlags: 0
@@ -353,7 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7274b9966ba422142a672408c7c7e50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryItems: []
+  inventoryItems:
+  - {fileID: 11400000, guid: ad346179aa3d49042bd3869fe7c48605, type: 2}
+  - {fileID: 11400000, guid: b303008d308f6a540bfecbfeb934d0b3, type: 2}
   inventorySpace: 24
 --- !u!114 &375136166
 MonoBehaviour:
@@ -367,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8cdf9f8fa38b48b21038406a8d0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveController: {fileID: 375136159}
 --- !u!1001 &660474473
 PrefabInstance:
   m_ObjectHideFlags: 0
