@@ -9,7 +9,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image itemIcon;
 
 
-    [Header("UI Elements")]
+    [Header("UI Elements")] 
+    [SerializeField] private GameObject StartingSeeds;
     [SerializeField] private GameObject UI_Sidebar;
     [SerializeField] private GameObject UI_MSidebar;
     [SerializeField] private GameObject UI_Inventory;
@@ -68,7 +69,8 @@ public class UIManager : MonoBehaviour {
 
         UI_NewItem.SetActive(false);
         UI_NewReward.SetActive(false);
-
+        StartingSeeds.SetActive(false);
+        
         StartCoroutine(BeginGameUI());
     }
 
@@ -88,6 +90,17 @@ public class UIManager : MonoBehaviour {
     private void Update()
     {
         currTime.text = System.DateTime.Now.ToShortTimeString();
+    }
+
+    public void ShowStartingSeeds()
+    {
+        StartingSeeds.SetActive(true);
+    }
+
+    public void ChooseSeed(InventoryItem startingSeed)
+    {
+        Inventory.instance.Add(startingSeed);
+        StartingSeeds.SetActive(false);
     }
 
     #region Button Functions
