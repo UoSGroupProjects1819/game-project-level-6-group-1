@@ -53,14 +53,9 @@ public class Sorting : MonoBehaviour
             if (!playerRewarded || reward == null)
                 Debug.Log("Could not reward player!");
 
-            if (Journal.instance.journalItems.Contains(reward))
-            {
-                UI.NewItemNotif(reward);
-            }
-            else
+            if (!Journal.instance.journalItems.Contains(reward))
             {
                 UI.NewRewardNotif(reward);
-                Journal.instance.Add(reward);
             }
 
             itemsSortedCorrectly = 0;

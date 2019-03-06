@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    [Header("UI Manager Properties")]
+    public GameObject[] UI_PANELS;
+
     [Header("Item Details Page")]
     [SerializeField] private TMPro.TMP_Text itemName;
     [SerializeField] private TMPro.TMP_Text growthTime;
@@ -17,7 +20,7 @@ public class UIManager : MonoBehaviour {
     //[SerializeField] private GameObject UI_Sorting;
     [SerializeField] private GameObject UI_Journal;
     [SerializeField] private GameObject UI_PlanetBanner;
-    [SerializeField] private GameObject UI_NewItem, UI_NewReward;
+    [SerializeField] private GameObject UI_NewReward;
     [SerializeField] private TMPro.TMP_Text[] planetTexts;
 
     [Header("Journal Pages")]
@@ -55,8 +58,6 @@ public class UIManager : MonoBehaviour {
         GM = GameManager.instance;
 
         //startDate = GM.GetStartDate;
-
-        newItem     = UI_NewItem.GetComponent<RewardNotification>();
         newReward   = UI_NewReward.GetComponent<RewardNotification>();
 
         gameVer.text = GM.GetBuildVersion;
@@ -66,8 +67,6 @@ public class UIManager : MonoBehaviour {
         statsTexts[1].text = "Not yet functional.";
         statsTexts[2].text = "Not yet functional.";
 
-
-        UI_NewItem.SetActive(false);
         UI_NewReward.SetActive(false);
         StartingSeeds.SetActive(false);
         
@@ -104,11 +103,21 @@ public class UIManager : MonoBehaviour {
     }
 
     #region Button Functions
+    public void _UIBasket()
+    {
+        foreach (GameObject _obj in UI_PANELS)
+        {
+            // Probably should have some code to tell each of those,
+            // that they are no longer visible? Or something.
+            _obj.SetActive(false);
+        }
+    }
+
     public void _ToggleInventoryUI()
     {
         GM.stopCameraMovement = !GM.stopCameraMovement;
         UI_Inventory.SetActive(!UI_Inventory.activeSelf);
-        UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
+        //UI_Sidebar.SetActive(!UI_Inventory.activeSelf);
     }
 
     public void _ToggleSidebarUI()
@@ -125,12 +134,6 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region Notifications
-    public void NewItemNotif(InventoryItem item)
-    {
-        UI_NewItem.SetActive(true);
-        newItem.DisplayNotification(item);
-    }
-
     public void NewRewardNotif(InventoryItem item)
     {
         UI_NewReward.SetActive(true);
@@ -161,19 +164,19 @@ public class UIManager : MonoBehaviour {
 
     IEnumerator BeginGameUI()
     {
-        StartCoroutine(FadeOutBanner(2.0f, 0.7f));
+        //StartCoroutine(FadeOutBanner(2.0f, 0.7f));
 
         yield return new WaitForSeconds(.2f);
 
-        UI_Sidebar.SetActive(true);
+        //UI_Sidebar.SetActive(true);
     }
 
-    IEnumerator FadeOutBanner(float bannerDelay, float fadeTime)
-    {
-        yield return new WaitForSeconds(bannerDelay);
-        UI_PlanetBanner.GetComponent<Image>().CrossFadeAlpha(0.0f, fadeTime, true);
+    //IEnumerator FadeOutBanner(float bannerDelay, float fadeTime)
+    //{
+    //    yield return new WaitForSeconds(bannerDelay);
+    //    UI_PlanetBanner.GetComponent<Image>().CrossFadeAlpha(0.0f, fadeTime, true);
 
-        yield return new WaitForSeconds(fadeTime);
-        UI_PlanetBanner.SetActive(false);
-    }
+    //    yield return new WaitForSeconds(fadeTime);
+    //    UI_PlanetBanner.SetActive(false);
+    //}
 }
