@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 //        }
 
         if (Input.GetKeyDown(KeyCode.S))
-            saveManager.SaveGame(planetObjects, inventory.inventoryItems);
+            //saveManager.SaveGame(planetObjects, inventory.inventoryItems);
         #endregion
 
         if (currentState == GameState.PlaceItem)
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
                 // Cleanup after spawning the item
                 currentState = GameState.Gameplay;
 
-                Inventory.instance.Remove(itemHolding);
+                //Inventory.instance.Remove(itemHolding);
 
                 itemHolding = null;
                 treePrefab = null;

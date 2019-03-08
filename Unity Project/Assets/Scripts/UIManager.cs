@@ -96,11 +96,11 @@ public class UIManager : MonoBehaviour {
         StartingSeeds.SetActive(true);
     }
 
-    public void ChooseSeed(InventoryItem startingSeed)
-    {
-        Inventory.instance.Add(startingSeed);
-        StartingSeeds.SetActive(false);
-    }
+    //public void ChooseSeed(InventoryItem startingSeed)
+    //{
+    //    Inventory.instance.Add(startingSeed);
+    //    StartingSeeds.SetActive(false);
+    //}
 
     #region Button Functions
     public void _UIBasket()

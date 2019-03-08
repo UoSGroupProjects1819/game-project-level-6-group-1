@@ -7,7 +7,11 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    public List<InventoryItem> inventoryItems = new List<InventoryItem>();
+    public List<GameObject> inventoryItems = new List<GameObject>();
+    public GameObject testObject;
+
+    [Tooltip("Parent gameobject for all inventory items, this is a workaround to make sure all items update when playing the game.")]
+    public Transform inventoryParent;
     [SerializeField] private int inventorySpace = 20;
 
     #region Singleton
@@ -24,9 +28,11 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         onItemChangedCallback.Invoke();
+
+        Add(testObject);
     }
 
-    public bool Add(InventoryItem item)
+    public bool Add(GameObject item)
     {
         if (inventoryItems.Count >= inventorySpace)
         {
@@ -35,6 +41,7 @@ public class Inventory : MonoBehaviour
         }
 
         inventoryItems.Add(item);
+        item.transform.parent = inventoryParent;
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
@@ -42,9 +49,10 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    public void Remove(InventoryItem item)
+    public void Remove(GameObject item)
     {
         inventoryItems.Remove(item);
+        Destroy(item);
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();

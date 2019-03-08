@@ -166,7 +166,6 @@ public class PlanetObject : MonoBehaviour
         if (finishedGrowing)
         {
             energyStar.SetActive(false);
-            Energy.instance.AddEnergy(1);
         }
 
         if (!isWatered)

@@ -5,18 +5,27 @@ public class InventorySlot : MonoBehaviour
 {
 
     public Image icon;
+    public Image iconBack;
     public Button removeButton;
 
-    InventoryItem item;
+    private GameObject item;
 
     /// <summary>
     /// Add a new item to the inventory list.
     /// </summary>
-    public void AddItem(InventoryItem newItem)
+    public void AddItem(GameObject newItem)
     {
+        SeedController seedController = newItem.GetComponent<SeedController>();
+
         item = newItem;
-        icon.sprite = item.itemIcon;
+        icon.sprite =   seedController.inventorySprite;
+                        seedController.invImg = icon;
+
+        icon.fillAmount = 0;
+
         icon.enabled = true;
+        iconBack.enabled = true;
+        //seedController.StartGrowth();
 
         removeButton.interactable = true;
     }
@@ -29,6 +38,7 @@ public class InventorySlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
+        iconBack.enabled = false;
 
         removeButton.interactable = false;
     }
@@ -44,7 +54,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (item != null)
         {
-            item.UseInventory();
+            item.GetComponent<SeedController>().Interact();
         }
     }
 
