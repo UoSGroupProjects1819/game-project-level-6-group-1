@@ -9,13 +9,11 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Image icon;
     public Image iconBack;
     public Button removeButton;
+    public Outline outline;
 
     private GameObject item;
-    [SerializeField]
     private bool pointerDown = false;
-    [SerializeField]
     private float pointerDownTimer;
-    public float test;
 
     /// <summary>
     /// Add a new item to the inventory list.
@@ -27,6 +25,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         item = newItem;
         icon.sprite =   seedController.inventorySprite;
                         seedController.invImg = icon;
+
+        seedController.itemOutline = outline;
 
         icon.fillAmount = 0;
 
@@ -54,7 +54,6 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (pointerDown)
         {
-            test += Time.deltaTime;
             pointerDownTimer += Time.deltaTime;
 
             if (pointerDownTimer >= 2)

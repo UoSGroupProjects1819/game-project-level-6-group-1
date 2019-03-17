@@ -18,6 +18,8 @@ public class SeedController : MonoBehaviour
     public Image invImg;
     public float waterClickLength = 2.0f;
 
+    public Outline itemOutline;
+
     private float remainTime = 0;
     private float targetTime = 0;
     private float currentTime = 0;
@@ -47,6 +49,7 @@ public class SeedController : MonoBehaviour
         if (currentWaterTimer <= 0)
         {
             isWatered = false;
+            itemOutline.enabled = true;
             currentWaterTimer = waterInterval;
         }
     }
@@ -74,6 +77,7 @@ public class SeedController : MonoBehaviour
     private void WaterItem()
     {
         currentWaterTimer = waterInterval;
+        itemOutline.enabled = false;
         isWatered = true;
     }
 
