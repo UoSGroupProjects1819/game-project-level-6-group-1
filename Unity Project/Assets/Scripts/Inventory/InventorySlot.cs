@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
 
     public Image icon;
@@ -9,6 +11,11 @@ public class InventorySlot : MonoBehaviour
     public Button removeButton;
 
     private GameObject item;
+    [SerializeField]
+    private bool pointerDown = false;
+    [SerializeField]
+    private float pointerDownTimer;
+    public float test;
 
     /// <summary>
     /// Add a new item to the inventory list.
@@ -41,6 +48,45 @@ public class InventorySlot : MonoBehaviour
         iconBack.enabled = false;
 
         removeButton.interactable = false;
+    }
+
+    private void Update()
+    {
+        if (pointerDown)
+        {
+            test += Time.deltaTime;
+            pointerDownTimer += Time.deltaTime;
+
+            if (pointerDownTimer >= 2)
+            {
+                if (item != null)
+                {
+                    //Debug.Log("Long Interact");
+                    item.GetComponent<SeedController>().Interact();
+                }
+
+                Reset();
+            }
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        pointerDown = true;
+        //Debug.Log("PointerDown");
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Reset();
+        //Debug.Log("PointerUp");
+    }
+
+    public void Reset()
+    {
+        pointerDown = false;
+        pointerDownTimer = 0;
+        //Debug.Log("Reset");
     }
 
     #region UI BUTTON FUNCTIONS
