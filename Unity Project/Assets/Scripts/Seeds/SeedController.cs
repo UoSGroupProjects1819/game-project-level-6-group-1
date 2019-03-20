@@ -17,6 +17,7 @@ public class SeedController : MonoBehaviour
     public float waterInterval;
     public Image invImg;
     public float waterClickLength = 2.0f;
+    public ParticleSystem waterGlow;
 
     public Outline itemOutline;
 
@@ -49,7 +50,8 @@ public class SeedController : MonoBehaviour
         if (currentWaterTimer <= 0)
         {
             isWatered = false;
-            itemOutline.enabled = true;
+            //itemOutline.enabled = true;
+            waterGlow.gameObject.SetActive(true);
             currentWaterTimer = waterInterval;
         }
     }
@@ -77,7 +79,8 @@ public class SeedController : MonoBehaviour
     private void WaterItem()
     {
         currentWaterTimer = waterInterval;
-        itemOutline.enabled = false;
+        //itemOutline.enabled = false;
+        waterGlow.gameObject.SetActive(false);
         isWatered = true;
     }
 

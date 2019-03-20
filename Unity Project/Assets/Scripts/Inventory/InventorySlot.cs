@@ -10,6 +10,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Image iconBack;
     public Button removeButton;
     public Outline outline;
+    public ParticleSystem waterGlow;
 
     private GameObject item;
     private bool pointerDown = false;
@@ -27,6 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                         seedController.invImg = icon;
 
         seedController.itemOutline = outline;
+        seedController.waterGlow = waterGlow;
 
         icon.fillAmount = 0;
 
